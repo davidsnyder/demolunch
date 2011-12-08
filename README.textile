@@ -2,16 +2,18 @@ h2. Democratic Lunch
 
 h3. Installation
 
-Install "MongoDB":http://www.mongodb.org/
+1. Install "MongoDB":http://www.mongodb.org/
 
-Install dependencies
+1. Install dependencies
 
-@bundle@
+   @bundle@
 
-start the mongodb server
+2. Start the mongodb server
 
-@mongod &@
+   @mongod &@
 
-start the rails server
+3. Start the dl-node nodejs vote server 
 
-@rails s@
+4. Start the rails server
+
+   @rails s -p 3001@
