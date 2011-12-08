@@ -1,0 +1,17 @@
+h2. Democratic Lunch
+
+h3. Installation
+
+Install "MongoDB":http://www.mongodb.org/
+
+Install dependencies
+
+@bundle@
+
+start the mongodb server
+
+@mongod &@
+
+start the rails server
+
+@rails s@
