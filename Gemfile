@@ -7,6 +7,8 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid_slug'
 
+gem 'redis'
+
 ## Auth
 gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"

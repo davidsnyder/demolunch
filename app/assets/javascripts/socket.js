@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
                     var socket = io.connect('http://localhost',{port: 3000});
                     var votes = $('#votes');
 
@@ -6,14 +7,11 @@ $(document).ready(function() {
                                 console.log("Connected");
                               });
 
-                    socket.on('message', function(message){
-                                console.log(message);
+                    socket.on('vote', function(message){
                                 votes.prepend(message + '<br />');
                               }) ;
-
 
                     socket.on('disconnect', function() {
                                 console.log("Disconnected");
                               });
-
                   });

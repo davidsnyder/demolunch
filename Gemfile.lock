@@ -126,6 +126,7 @@ GEM
     rake (0.9.2.2)
     rdoc (3.11)
       json (~> 1.4)
+    redis (2.2.2)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
@@ -176,6 +177,7 @@ DEPENDENCIES
   mongoid_slug
   oa-oauth
   rails (= 3.1.1)
+  redis
   rspec
   ruby_parser
   sass-rails (~> 3.1.4)
