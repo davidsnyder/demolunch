@@ -19,6 +19,8 @@ gem 'ruby_parser'
 gem 'formtastic'
 gem 'haml'
 
+gem 'uuidtools'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

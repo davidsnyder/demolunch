@@ -1,7 +1,4 @@
 %h1
   Democratic Lunch
 
-= form_tag '/socket_test',:method => "post",:remote => true, :id => 'vote-form' do
-  = submit_tag 'Vote',:id => 'vote-submit'
-
-#votes
+= link_to "New Meal", new_meal_path
