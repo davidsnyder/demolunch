@@ -1,7 +1,7 @@
 class MealsController < ApplicationController
 
   def show
-    @meal = Meal.where(:uuid => params[:id])
+    @meal = Meal.where(:uuid => params[:id]).first
   end
 
   def new

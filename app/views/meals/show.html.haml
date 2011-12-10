@@ -1,7 +1,8 @@
 %h1
   Vote for lunch
 
-= form_tag '/socket_test',:method => "post",:remote => true, :id => 'vote-form' do
+= form_tag "/socket_test",:method => "post",:remote => true, :id => 'vote-form' do
+  = hidden_field :meal, :id,:value => @meal.uuid
   = submit_tag 'Vote',:id => 'vote-submit'
 
 #votes
