@@ -8,6 +8,8 @@ gem 'bson_ext'
 gem 'mongoid_slug'
 
 gem 'redis'
+gem 'httparty'
+#gem 'open_menu', :git => 'https://github.com/dsnyder90/open_menu.git'
 
 ## Auth
 gem 'devise'

@@ -8,6 +8,6 @@ class HomeController < ApplicationController
     vote = [params[:meal][:id],%w(bill ted mary).sample,%w(fricanos torchys subway).sample].join(":")
     #publishes "meal_id:user_id:restaurant_id"
     redis_client.publish('dl.channel.votes',vote)
-    redirect_to root_url
+    redirect_to meal_path(params[:meal][:id])
   end
 end

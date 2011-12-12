@@ -7,6 +7,7 @@ class Restaurant
   field :url
 
   has_many :meals
+  has_one  :menu
   has_many :orders, :through => :meals
 
 end

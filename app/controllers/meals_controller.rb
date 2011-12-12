@@ -2,6 +2,11 @@ class MealsController < ApplicationController
 
   def show
     @meal = Meal.where(:uuid => params[:id]).first
+
+    if ENV['OPEN_MENU_APIKEY']
+      @om_client = OpenMenu::Client.new(ENV['OPEN_MENU_APIKEY'])
+      @menu = @om_client.menu("3b164192-15bb-11e0-b40e-0018512e6b26").parsed_response["omf"]["menus"]["menu"]
+    end
   end
 
   def new
