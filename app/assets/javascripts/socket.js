@@ -8,6 +8,7 @@ $(document).ready(function() {
     
     var session = {}; 
     var paths   = {};
+    var labels  = {};
     var keys    = [];
     
     socket.on('connect', function() {
@@ -17,21 +18,19 @@ $(document).ready(function() {
     socket.on('join_confirm', function(message) { //render the piechart
         session = JSON.parse(message);
         votes.prepend(message + '<br />');                
-        var bg = r.circle(200, 200, 0).attr({stroke: "#fff", "stroke-width": 4});
-        animate();
+        var bg = r.circle(300, 300, 0).attr({stroke: "#fff", "stroke-width": 4});
+        animate(800);
     });
 
     socket.on('vote', function(message){ //update the piechart
         session = JSON.parse(message);
         votes.prepend(message + '<br />');        
-        animate();
+        animate(800);
     });
 
     socket.on('disconnect', function() {
         console.log("Disconnected");
     });
-
-    //TODO: pull Raphael init stuff out somewhere else
 
     var r = Raphael("holder");
 
@@ -49,12 +48,16 @@ $(document).ready(function() {
     function animate(ms) {
         var start = 0,
         keys = [],
+        delta = 30,
+        rad = Math.PI / 180,
         offset;
         
         for(var id in paths) {
             if(session.votes[id] == undefined) { //wink out null slices
                 var current_end = paths[id].attrs['segment'][4];
-                paths[id].animate({segment: [200, 200, 150,current_end,current_end]}, ms || 1500,'',function(){this.remove()});
+                paths[id].animate({segment: [300, 300, 150,current_end,current_end]}, ms || 1500,'',function(){this.remove()});
+                labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
+                delete labels[id];
                 delete paths[id];
             }
         }
@@ -68,16 +71,21 @@ $(document).ready(function() {
             var id = keys[i];
             offset = 360 / session.total * (session.votes[id].length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
             if(!(paths[id] == undefined)) {
-                paths[id].animate({segment: [200, 200, 150, start, start+=offset]}, ms || 1500);  //animate yourself to this new segment size
+                paths[id].animate({segment: [300, 300, 150, start, start + offset]}, ms || 1500);  //animate yourself to this new segment size
+                labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
+                delete labels[id];                
+                labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});                 
+                start+=offset;
                 paths[id].angle = start - offset / 2;
             }
             else {
-                paths[id] = r.path().attr({segment: [200, 200, 150, start, start], stroke: "#fff"}).click(function() { //create a new segment for this id
+                paths[id] = r.path().attr({segment: [300, 300, 150, start, start], stroke: "#fff"}).click(function() { //create a new segment for this id
                     //TODO: send vote on click / do something else
                     animate();
                 });
-                //TODO: Figure out how to draw labels
-                paths[id].animate({segment: [200, 200, 150, start, start += offset]}, ms || 1500);  //animate yourself to this new segment size
+
+                labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20}); 
+                paths[id].animate({segment: [300, 300, 150, start, start += offset]}, ms || 1500);  //animate yourself to this new segment size
                 paths[id].angle = start - offset / 2;
             }
             

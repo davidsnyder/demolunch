@@ -4,12 +4,12 @@ body {
     font: 100.1% "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 #holder {
-    height: 480px;
+    height: 600px;
     left: 50%;
-    margin: 0 0 0 -320px;
+    margin: 0 0 0 -120px;
     position: absolute;
     top: 0;
-    width: 640px;
+    width: 600px;
 }
 #copy {
     bottom: 0;
