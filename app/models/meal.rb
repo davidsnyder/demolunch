@@ -7,6 +7,8 @@ class Meal
   field :uuid
   slug  :uuid
 
+  embeds_one :location
+
   has_many   :orders
   belongs_to :restaurant
   belongs_to :organization #optional

@@ -1,0 +1,12 @@
+factual:
+  apikey: 
+  places_table: s4OOB4
+  search_radius: 50000
+  search_category: food
+  page_size: 15
+openmenu:
+  apikey: 
+yelp:
+  apikey: 
+infochimps:
+  apikey: 
