@@ -53,12 +53,8 @@ $(document).ready(function() {
         offset;
         
         for(var id in paths) {
-            if(session.votes[id] == undefined) { //wink out null slices
-                var current_end = paths[id].attrs['segment'][4];
-                paths[id].animate({segment: [300, 300, 150,current_end,current_end]}, ms || 1500,'',function(){this.remove()});
-                labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
-                delete labels[id];
-                delete paths[id];
+            if(!(id in session.votes)) {
+                keys.push(id);
             }
         }
 
@@ -67,15 +63,30 @@ $(document).ready(function() {
         }
         keys.sort();
         
+        var prev_end = 0;
         for(i=0; i < keys.length; i++) {
             var id = keys[i];
+
+            // this loop processes all old and new keys, so that when a slice disappears, it disappears into the angle that its neighbors squeeze it into.
+            if(session.votes[id] == undefined) { //wink out null slices
+                var current_end = paths[id].attrs['segment'][4];
+                paths[id].animate({segment: [300, 300, 150,start,start]}, ms || 1500,'',function(){this.remove()});
+                labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
+                delete labels[id];
+                delete paths[id];
+                continue; // bad form, carlos. *tsk tsk*. Seriously though, this is kind of gross and needs to be noted to minimize future headaches.
+            }
             offset = 360 / session.total * (session.votes[id].length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
             if(!(paths[id] == undefined)) {
+                // we only care to record the previous segment's end if they were already in the pie
+                prev_end = paths[id].attrs['segment'][4];
                 labels[id].animate({opacity:0}, 0,'',function(){this.remove()}); //remove any existing label
                 delete labels[id];                
             }
             else {
-                paths[id] = r.path().attr({segment: [300, 300, 150, start, start], stroke: "#fff"}).click(function() { //create a new segment for this id
+                // rationale with going to prev_end: prev_end is the angle that the future neighbors of the newborn slice were meeting at.
+                // prev_end is arguably a deceptive name given that it corresponds to the new placement of the previous segment, not the previous placement of the current slice.
+                paths[id] = r.path().attr({segment: [300, 300, 150, prev_end, prev_end], stroke: "#fff"}).click(function() { //create a new segment for this id
                     //TODO: send vote on click / do something else
                     animate();
                 });
