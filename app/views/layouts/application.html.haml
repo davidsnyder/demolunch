@@ -2,13 +2,13 @@
 %html
   %head
     %title Democratic Lunch
-    = stylesheet_link_tag :application
+    = stylesheet_link_tag :application,"demo","demo-print"
+    
     %script{:type => "text/javascript", :src=> "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     // %script{:type => "text/javascript", :src=> "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"}
 
     %script{:type => "text/javascript", :src  => "http://localhost:3000/socket.io/socket.io.js"}
-     
-    = javascript_include_tag :socket,:application
+    = javascript_include_tag :raphael,:socket,:application
     = csrf_meta_tags
   %body
     - flash.each do |name, msg|

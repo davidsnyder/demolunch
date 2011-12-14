@@ -4,9 +4,8 @@
 = form_tag "/socket_test",:method => "post",:remote => true, :id => 'vote-form' do
   = hidden_field :meal, :id,:value => @meal.uuid
   = submit_tag 'Vote',:id => 'vote-submit'
-
+  
+#holder
 #votes
 
-
 = render :partial => "menu",:menu => @menu 
-  
