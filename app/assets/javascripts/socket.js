@@ -4,7 +4,7 @@ $(document).ready(function() {
     var votes  = $('#votes');
     
     var url = window.location.href.split('://')[1].split('/'); //should insert this some other way?
-    var meal_id = url[url.length-1];
+    var session_id = url[url.length-1];
     
     var session = {}; 
     var paths   = {};
@@ -12,7 +12,7 @@ $(document).ready(function() {
     var keys    = [];
     
     socket.on('connect', function() {
-        socket.emit('join', meal_id );
+        socket.emit('join', session_id );
     });
 
     socket.on('join_confirm', function(message) { //render the piechart
@@ -71,25 +71,19 @@ $(document).ready(function() {
             var id = keys[i];
             offset = 360 / session.total * (session.votes[id].length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
             if(!(paths[id] == undefined)) {
-                paths[id].animate({segment: [300, 300, 150, start, start + offset]}, ms || 1500);  //animate yourself to this new segment size
-                labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
+                labels[id].animate({opacity:0}, 0,'',function(){this.remove()}); //remove any existing label
                 delete labels[id];                
-                labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});                 
-                start+=offset;
-                paths[id].angle = start - offset / 2;
             }
             else {
                 paths[id] = r.path().attr({segment: [300, 300, 150, start, start], stroke: "#fff"}).click(function() { //create a new segment for this id
                     //TODO: send vote on click / do something else
                     animate();
                 });
-
-                labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20}); 
-                paths[id].animate({segment: [300, 300, 150, start, start += offset]}, ms || 1500);  //animate yourself to this new segment size
-                paths[id].angle = start - offset / 2;
             }
-            
+            paths[id].animate({segment: [300, 300, 150, start, start + offset]}, ms || 1500);  //animate yourself to this new segment size            
+            labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});
+            start+=offset;            
+            paths[id].angle = start - offset / 2;            
         }
     }
-    
 });
