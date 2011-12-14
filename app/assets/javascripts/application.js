@@ -9,4 +9,6 @@ $(document).ready(function() {
         });
     });
 
+     $('.invite').val(window.location.href.split('://')[1]);
+
 });

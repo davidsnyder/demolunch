@@ -11,6 +11,13 @@
     = javascript_include_tag :application,:raphael,:socket
     = csrf_meta_tags
   %body
+    #title
+      .left
+        %img{:src  => "/dl_pie_logo.png"}
+      .right
+        .invite_text
+          INVITE VOTERS
+        %input.url.invite{:type => "text"}
     - flash.each do |name, msg|
       = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
     = yield

@@ -8,6 +8,6 @@ class Restaurant
 
   has_many :meals
   has_one  :menu
-  has_many :orders, :through => :meals
+  has_many :orders
 
 end
