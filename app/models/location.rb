@@ -4,6 +4,8 @@ class Location
   #This schema is largely ripped from Factual's Place schema
   #http://developer.factual.com/display/docs/Places+API+-+Global+Place+Attributes
 
+  belongs_to :addressable,:polymorphic => true
+
   field :latitude #WGS84
   field :longitude #WGS84
 

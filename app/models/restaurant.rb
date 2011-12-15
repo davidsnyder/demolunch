@@ -9,7 +9,7 @@ class Restaurant
   field :category
   field :url
 
-  embeds_one :location
+  has_one :location, :as => :addressable
 
   has_many :meals
   has_one  :menu
@@ -22,8 +22,9 @@ class Restaurant
     results = { "total" => 0,"results" => []}
     filters = {"category" => {"$bw" => APP_CONFIG['factual']['search_category']}} # $bw == "begins_with"
     if(latitude && longitude)
-      filters = filters.merge("$loc" => {"$within" => {"$center" => [[latitude, longitude],APP_CONFIG['factual']['search_radius']]}})
+      filters = filters.merge("$loc" => {"$within" => {"$center" => [[latitude.to_f, longitude.to_f],APP_CONFIG['factual']['search_radius']]}})
     end
+    # This shit takes 2 seconds....
     places_table.filter(filters).page(page_num,:size => APP_CONFIG['factual']['page_size']).search(term).each_row{ |row|
       results["results"] << Restaurant.build_from_row(row)
       results["total"]+=1

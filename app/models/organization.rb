@@ -5,7 +5,7 @@ class Organization
   field :name
   slug  :name
 
-  embeds_one :location
+  has_one :location, :as => :addressable
 
   has_many :employees, :class_name => 'User'
   has_many :meals

@@ -8,4 +8,21 @@
 #holder
 #votes
 
+%h1
+  Restaurant Search
+.search
+  = form_tag restaurants_search_path, :remote => true,:method => :get,:id => 'search-form' do
+    .location
+      = hidden_field_tag :latitude, @meal.location.latitude
+      = hidden_field_tag :longitude, @meal.location.longitude
+      -# %p.input
+      -#   = text_field :meal,:location, :id => :location_autocomplete
+      -# %a{:class => "change_location",:href => "#"} change          
+    .selector.flowbox
+      = text_field_tag :q
+    .selector.search
+      = submit_tag "Search",:id => 'search-submit'
+.results
+  #searches
+
 = render :partial => "menu",:menu => @menu 

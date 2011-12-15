@@ -18,6 +18,8 @@ Demolunch::Application.routes.draw do
     resources :meals
   end
 
+  match 'restaurants/search'  => 'Restaurants#search', :via => :get
+
   match ':organization_id/meals/:id' => 'meals#show',:as => :organization_meal,:via => :get
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
