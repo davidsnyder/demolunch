@@ -15,16 +15,10 @@ $(document).ready(function() {
         socket.emit('join', session_id );
     });
 
-    socket.on('join_confirm', function(message) { //render the piechart
-        session = JSON.parse(message);
-        votes.prepend(message + '<br />');                
-        var bg = r.circle(300, 300, 0).attr({stroke: "#fff", "stroke-width": 4});
-        animate(800);
-    });
-
     socket.on('vote', function(message){ //update the piechart
         session = JSON.parse(message);
-        votes.prepend(message + '<br />');        
+        // var optionBars = Mustache.to_html($("#option-template").html(), session);        
+        // $("#option-bars").html(optionBars);
         animate(800);
     });
 
@@ -33,6 +27,8 @@ $(document).ready(function() {
     });
 
     var r = Raphael("holder");
+
+    var bg = r.circle(300, 300, 0).attr({stroke: "#fff", "stroke-width": 4});        
 
     r.customAttributes.segment = function (x, y, r, a1, a2) {
         var flag = (a2 - a1) > 180,
@@ -53,22 +49,22 @@ $(document).ready(function() {
         offset;
         
         for(var id in paths) {
-            if(!(id in session.votes)) {
+            if(!(id in session.options)) {
                 keys.push(id);
             }
         }
 
-        for(var id in session.votes) {
+        for(var id in session.options) {
             keys.push(id);
         }
         keys.sort();
         
         var prev_end = 0;
-        for(i=0; i < keys.length; i++) {
+        for(var i=0; i < keys.length; i++) {
             var id = keys[i];
 
             // this loop processes all old and new keys, so that when a slice disappears, it disappears into the angle that its neighbors squeeze it into.
-            if(session.votes[id] == undefined) { //wink out null slices
+            if(session.options[id] == undefined) { //wink out null slices
                 var current_end = paths[id].attrs['segment'][4];
                 paths[id].animate({segment: [300, 300, 150,start,start]}, ms || 1500,'',function(){this.remove()});
                 labels[id].animate({opacity:0}, 0,'',function(){this.remove()});
@@ -76,7 +72,7 @@ $(document).ready(function() {
                 delete paths[id];
                 continue; // bad form, carlos. *tsk tsk*. Seriously though, this is kind of gross and needs to be noted to minimize future headaches.
             }
-            offset = 360 / session.total * (session.votes[id].length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
+            offset = 360 / session.total_votes * (session.options[id].votes.length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
             if(!(paths[id] == undefined)) {
                 // we only care to record the previous segment's end if they were already in the pie
                 prev_end = paths[id].attrs['segment'][4];
@@ -92,7 +88,7 @@ $(document).ready(function() {
                 });
             }
             paths[id].animate({segment: [300, 300, 150, start, start + offset]}, ms || 1500);  //animate yourself to this new segment size            
-            labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), id).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});
+            labels[id] = r.text(300 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 300 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), session.options[id].name).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});
             start+=offset;            
             paths[id].angle = start - offset / 2;            
         }

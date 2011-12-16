@@ -6,6 +6,22 @@
   = submit_tag 'Vote',:id => 'vote-submit'
   
 #holder
+
+#option-bars
+  
+#option-template{:type => "text/template"}
+  .option{:id => "{{ id }}"}
+    .name
+      {{ name }}
+    .votes
+      {{ votes }}
+    -# .details
+    -# .rating
+    .full_bar
+      .bar{:style => "background: {{ fill }}; width: {{ width }};"}
+-# .checkbox
+-#   =check_box(:meal,:selected)
+  
 #votes
 
 %h1
