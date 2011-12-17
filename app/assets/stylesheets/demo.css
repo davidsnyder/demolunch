@@ -3,11 +3,15 @@ body {
     color: #fff;
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 }
+#option-bars {
+    width: 400px;
+}
 #holder {
     height: 480px;
-    left: 50%;
+    /*left: 50%;
     margin: -240px 0 0 -320px;
-    position: absolute;
+    position: absolute;*/
+    margin: -240px 0 0 0;
     top: 50%;
     width: 640px;
 }

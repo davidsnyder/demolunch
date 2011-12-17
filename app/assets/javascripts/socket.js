@@ -32,7 +32,8 @@ $(document).ready(function() {
                 fraction: (session.options[id].votes.length / session.total_votes * 100),
                 voters: voteString(session.options[id].votes),
                 name: session.options[id].name,
-                id: id
+                id: id,
+                color: '#0af'
             };
             optionBars += Mustache.to_html($("#option-template").html(),option);        
             $("#option-bars").html(optionBars);

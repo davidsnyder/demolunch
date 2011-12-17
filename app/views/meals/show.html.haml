@@ -5,9 +5,10 @@
   = hidden_field :meal, :id,:value => @meal.uuid
   = submit_tag 'Vote',:id => 'vote-submit'
   
-#holder
+.row
+  #option-bars.span
+  #holder.span
 
-#option-bars
   
 #option-template
   .option{:id => "{{ id }}"}
@@ -16,7 +17,8 @@
     .votes
       {{ voters }}
     .full_bar
-      .bar{:style => "width: {{ fraction }}em;"}
+      .bar{:style => "width: {{ fraction }}%; background: {{ color }};"}
+        &nbsp;
   
 #votes
 

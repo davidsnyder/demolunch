@@ -38,3 +38,16 @@
 #option-template {
    display: none;
 }
+
+.row:before, .row:after {
+  display: table;
+  content: "";
+}
+.row:after {
+  clear: both;
+}
+.row > [class*="span"] {
+  display: inline;
+  float: left;
+  margin-left: 20px;
+}
