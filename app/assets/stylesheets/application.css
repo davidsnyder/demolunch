@@ -35,7 +35,7 @@
   height: 10px;
 }
 
-#option-template {
+#option-template  {
    display: none;
 }
 
@@ -50,4 +50,11 @@
   display: inline;
   float: left;
   margin-left: 20px;
+}
+#search-row-template {
+   display: none;   
+}
+
+.search_result .coordinates {
+   display: none;   
 }

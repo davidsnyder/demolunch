@@ -37,6 +37,22 @@
     .selector.search
       = submit_tag "Search",:id => 'search-submit'
 .results
-  #searches
+  %ul#searches
+
+#search-row-template
+  %li.search_result{:id => "{{ factual_id }}"}
+    .name
+      {{ name }}
+    .address
+      {{ address}} {{address_extended}}
+    .locality
+      {{ locality }}, {{ region}}
+    .coordinates
+      .latitude
+        {{ latitude }}
+      .longitude
+        {{ longitude }} 
+    .telephone
+      {{ tel }} 
 
 = render :partial => "menu",:menu => @menu 
