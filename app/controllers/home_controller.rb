@@ -8,12 +8,12 @@ class HomeController < ApplicationController
 
     #REMOVE: test data to populate chart
 
-    restaurants = %w(Fricanos Torchys Subway)
-    restaurant_ids = %w(fricanos-id torchys-id subway-id)
+    restaurants = %w(Fricanos Torchys Subway Whataburger)
+    restaurant_ids = %w(fricanos-id torchys-id subway-id whataburger-id)
     rests = Hash[restaurants.zip(restaurant_ids)]
 
-    names = %w(Bill Ted Mary Bob)
-    usernames = %w(@bill @ted @mary @bob)
+    names = %w(Bill Ted Mary Bob Ted)
+    usernames = %w(@bill @ted @mary @bob @ted)
     users = Hash[names.zip(usernames)]
 
     name = users.keys.sample

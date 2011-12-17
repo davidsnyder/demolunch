@@ -6,3 +6,35 @@
  *= require_tree . 
 */
 
+
+.option {
+  border-radius: 7px;
+  padding: 8px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #f0eee5;
+}
+
+.option .name {
+  font: 22px/24px serif;
+}
+
+.option .votes {
+  font: 11px/19px sans-serif;
+}
+
+.option .full_bar {
+  background: #fffdf4; /* same color as main/body background */
+}
+
+.bar .selected .option {
+  background: #ddd;
+  height: 10px;
+}
+
+#option-template {
+   display: none;
+}

@@ -9,18 +9,14 @@
 
 #option-bars
   
-#option-template{:type => "text/template"}
+#option-template
   .option{:id => "{{ id }}"}
     .name
       {{ name }}
     .votes
-      {{ votes }}
-    -# .details
-    -# .rating
+      {{ voters }}
     .full_bar
-      .bar{:style => "background: {{ fill }}; width: {{ width }};"}
--# .checkbox
--#   =check_box(:meal,:selected)
+      .bar{:style => "width: {{ fraction }}em;"}
   
 #votes
 

@@ -15,11 +15,29 @@ $(document).ready(function() {
         socket.emit('join', session_id );
     });
 
-    socket.on('vote', function(message){ //update the piechart
+    function voteString(votes) {
+        var voters = [];
+        for(vote_i in votes) {
+            voters.push(votes[vote_i].name);
+        }
+        return voters.join(', ');
+    }
+
+    socket.on('vote', function(message){ 
         session = JSON.parse(message);
-        // var optionBars = Mustache.to_html($("#option-template").html(), session);        
-        // $("#option-bars").html(optionBars);
-        animate(800);
+        var optionBars = "";
+        var option;
+        for(var id in session.options) {
+            option = {
+                fraction: (session.options[id].votes.length / session.total_votes * 100),
+                voters: voteString(session.options[id].votes),
+                name: session.options[id].name,
+                id: id
+            };
+            optionBars += Mustache.to_html($("#option-template").html(),option);        
+            $("#option-bars").html(optionBars);
+        };
+        animate(800); //update the piechart
     });
 
     socket.on('disconnect', function() {
