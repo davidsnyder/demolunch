@@ -8,14 +8,14 @@ gem 'bson_ext'
 gem 'mongoid_slug'
 
 gem 'redis'
+
+gem 'chimps' #using Infochimps IP => Geo
 gem 'open_menu', :git => 'git://gist.github.com/1473403.git'
+gem 'factual',:git => 'git://gist.github.com/1491244.git'
 
 ## Auth
 gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
-
-gem 'chimps'
-gem 'ruby-factual', :require => 'factual'  #only v2 right now, will move to v3
 
 ## Markup
 gem 'hpricot'

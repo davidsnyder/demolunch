@@ -35,6 +35,14 @@
   height: 10px;
 }
 
-#option-template {
+#option-template  {
    display: none;
+}
+
+#search-row-template {
+   display: none;   
+}
+
+.search_result .coordinates {
+   display: none;   
 }

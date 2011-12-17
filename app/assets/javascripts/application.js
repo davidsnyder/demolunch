@@ -16,7 +16,14 @@ $(document).ready(function() {
             url: $('#search-form').attr("action"), 
             data: $('#search-form').serialize(), 
             success: function(r) {
-                $("#searches").prepend(r + '<br />');                }
+              var searchResponse = "";
+              r = JSON.parse(r);
+              for(var id in r.response.data) {
+                var obj = r.response.data[id];
+                searchResponse += Mustache.to_html($("#search-row-template").html(),obj);        
+              }
+              $("#searches").html(searchResponse);
+            }
         });
     });
 
