@@ -1,12 +1,13 @@
 %h1
   Vote for lunch
 
-= form_tag "/socket_test",:method => "post",:remote => true, :id => 'vote-form' do
-  = hidden_field :meal, :id,:value => @meal.uuid
-  = submit_tag 'Vote',:id => 'vote-submit'
   
 .row
-  #option-bars.span
+  .span
+    = form_tag "/socket_test",:method => "post",:remote => true, :id => 'vote-form' do
+      = hidden_field :meal, :id,:value => @meal.uuid
+      = submit_tag 'Vote',:id => 'vote-submit'
+    #option-bars
   #holder.span
 
   
