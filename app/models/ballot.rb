@@ -4,18 +4,21 @@ class Ballot
   field :uuid
   key   :uuid
 
-  field :option_klass #set at ballot creation
-
-  embeds_one :location, :as => :addressable  #optional, ballot may not be location specific
+  field :option_klass #set at ballot creation, used to tune search results
+  field :search_filters,:type => Array,:default => []
+  field :geo_filter,:type => Hash,:default => {}
 
   embeds_many :options
-
-  accepts_nested_attributes_for :options,:location
+  accepts_nested_attributes_for :options
 
   before_create :generate_uuid!
 
   def total_votes
     @total_votes ||= options.inject(0){|sum,option| sum += option.votes.length}
+  end
+
+  def option_klass_template
+    self.option_klass.to_s.underscore
   end
 
   #FIXME: Overriding serialization so I can stuff in instance methods

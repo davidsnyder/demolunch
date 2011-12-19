@@ -12,7 +12,6 @@ $(document).ready(function() {
             data: $('#search-form').serialize(), 
             success: function(r){
               var searchResponse = "";
-              r = JSON.parse(r);
               for(var id in r.response.data) {
                 var obj = r.response.data[id];
                 searchResponse += Mustache.to_html($("#search-row-template").html(),obj);        
@@ -29,7 +28,6 @@ $(document).ready(function() {
 });
 
 function registerOptionListener() {
-    console.log("here");
     $('.option').click(function(e){
         $("input:radio").attr('checked',false);
         $('.option').removeClass('selected');

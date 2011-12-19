@@ -6,21 +6,25 @@ class BallotsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @ballot.to_json }
+      format.json { render :json => Yajl::Encoder.encode(@ballot) }
     end
   end
 
   def new
-    @ballot = Ballot.new(:option_klass => RestaurantOption.to_s)
+    @ballot = Ballot.new(:option_klass => RestaurantOption.to_s) #FIXME: Hardcoded option_klass
     if(@ballot.option_klass.constantize < PlaceOption)
-      @ballot.location = Location.new(location_for(request.remote_ip))
+#      location = location_for(request.remote_ip)
+      @ballot.geo_filter = @ballot.option_klass.constantize.geo_filter_for(30.30,-97.68,APP_CONFIG['factual']['search_radius'])
     end
-  end
+   end
 
   def create
-    #FAKE:
+    #FIXME: Hardcoded option_klass
     params[:ballot][:option_klass] = RestaurantOption.to_s
-    params[:ballot][:options] = RestaurantOption.search('mexican food',:latitude => 30.3,:longitude => -97.7)["response"]["data"][0..3]
+    geo_filter = params[:ballot][:geo_filter].nil? ? {} : Yajl::Parser.parse(params[:ballot][:geo_filter])
+    search_filters = params[:ballot][:search_filters].nil? ? [] : Yajl::Parser.parse(params[:ballot][:search_filters])
+
+    params[:ballot][:options_attributes] = RestaurantOption.search('mexican food',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
 
     @ballot = Ballot.new(params[:ballot])
     if(@ballot.save)

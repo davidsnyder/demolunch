@@ -1,7 +1,7 @@
 class RestaurantOption < PlaceOption
 
   @search_table    = "restaurants-us"
-  @search_category = "Food"
+  @search_filters  = [{"category" => {"$bw" => "Food"}}]
 
 end
 

@@ -3,7 +3,7 @@
   
 .row
   .span
-    = form_for @vote,:method => "post",:remote => true do |f|
+    = form_for @vote,:method => :get,:remote => true do |f|
       = f.hidden_field :ballot_id, :value => @ballot.uuid
       = f.label :voter
       = f.text_field :voter
@@ -19,12 +19,12 @@
   Search
 .search
   = form_tag options_search_path(@ballot.uuid), :remote => true,:method => :get,:id => 'search-form' do
-    .location
-      = hidden_field_tag :latitude, @ballot.location.latitude
-      = hidden_field_tag :longitude, @ballot.location.longitude
-      -# %p.input
-      -#   = text_field :ballot,:location, :id => :location_autocomplete
-      -# %a{:class => "change_location",:href => "#"} change          
+    = hidden_field_tag :option_klass, @ballot.option_klass
+    .geo_filter
+      = hidden_field_tag :geo_filter, @ballot.geo_filter
+    .search_filters
+      - @ballot.search_filters.each do |sf| 
+        = hidden_field_tag :search_filters, sf
     .selector.flowbox
       = search_field_tag :q
     .selector.search
@@ -36,4 +36,4 @@
 #option-template
   = render "options/bar_must"
 #search-row-template
-  = render "options/#{@ballot.option_klass.to_s.underscore}"
+  = render "options/#{@ballot.option_klass_template}"

@@ -4,13 +4,12 @@ class Option
   field :factual_id
   key   :factual_id
 
-  #Override in subclass
-  class << self; attr_accessor :search_category,:search_table end
-
   field :name
 
   embedded_in :ballot
   has_many :votes
+
+  class << self; attr_accessor :search_table,:search_filters,:geo_filter end
 
   def fraction
     (ballot.total_votes == 0) ? 0 : (votes.length / ballot.total_votes.to_f) * 100
@@ -20,7 +19,7 @@ class Option
     str = votes[0..4].map{|vote| vote.voter}.join(", ")
     count = votes.length
     if(count > 4)
-      str + " and #{count - 4} more"
+      str += " and #{count - 4} more"
     end
     str
   end
@@ -39,25 +38,39 @@ class Option
           attrs[name] = relation.as_document unless relation.blank?
         end
       end
-    end.merge(:color => color,:fraction => fraction, :voters => voters,:votes => votes)
+    end.merge(:color => color,:fraction => fraction, :voters => voters,:votes => votes.map{|v|v.as_document.to_hash})
   end
 
   def to_json
     as_document.to_hash.to_json
   end
 
-  def self.get(factual_id)
-    filter = {"factual_id" => {"$eq" => factual_id}}
-    req = factual_client.table(APP_CONFIG['factual']['table']).filters(filter)
-    Rails.logger.info(req.url)
-    req.fetch
+  def self.geo_filter_for(latitude,longitude,radius)
+    {"$circle" => {"$center" => [latitude.to_f, longitude.to_f],"$meters" => radius.to_i}}
   end
 
-  def self.search(term,options={ })
-    filter = @search_category.nil? ? nil : {"category" => {"$bw" => @search_category}} # $bw == "begins_with"
-    geo_filter = (options["latitude"] && options["longitude"]) ? {"$circle" => {"$center" => [options["latitude"].to_f, options["longitude"].to_f],"$meters" => APP_CONFIG['factual']['search_radius']}} : nil
-    req = factual_client.table(@search_table).filters(filter).near(geo_filter).limit(APP_CONFIG['factual']['page_size']).offset((options["page"] || 1) * APP_CONFIG['factual']['page_size'] - APP_CONFIG['factual']['page_size']).search(term)
-    resp = req.fetch
+  def self.get(factual_id)
+    filter  = {"factual_id" => {"$eq" => factual_id}}
+    request = factual_client.table(@search_table).filters(filter)
+    request.fetch
+  end
+
+  def self.search(term,geo_filter={},search_filters=[],page=1)
+    filters    = (search_filters << @search_filters).flatten.sort.uniq.inject({ }){|filters,filter| filters.merge(filter) }
+    page_size  = APP_CONFIG['factual']['page_size']
+    offset     = page * page_size - page_size
+    request = factual_client.table(@search_table).filters(filters).near(geo_filter).limit(page_size).offset(offset).search(term)
+    response = request.fetch
+
+    #FIXME: Factual sends back a key that begins with '$', and MongoDB whines like a BITCH
+    if(response["response"] && response["response"]["data"])
+      response["response"]["data"] = response["response"]["data"].inject([]) do |opts,option|
+        opts << option.inject({}) do |hsh,kv|
+          hsh.merge(kv[0].gsub('$','') => kv[1])
+        end
+      end
+    end
+    response
   end
 
   private
