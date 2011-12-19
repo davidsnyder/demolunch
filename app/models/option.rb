@@ -49,8 +49,8 @@ class Option
     {"$circle" => {"$center" => [latitude.to_f, longitude.to_f],"$meters" => radius.to_i}}
   end
 
-  def self.get(factual_id)
-    filter  = {"factual_id" => {"$eq" => factual_id}}
+  def self.get(id)
+    filter  = {"factual_id" => {"$eq" => id}}
     request = factual_client.table(@search_table).filters(filter)
     request.fetch
   end
@@ -59,10 +59,10 @@ class Option
     filters    = (search_filters << @search_filters).flatten.sort.uniq.inject({ }){|filters,filter| filters.merge(filter) }
     page_size  = APP_CONFIG['factual']['page_size']
     offset     = page * page_size - page_size
-    request = factual_client.table(@search_table).filters(filters).near(geo_filter).limit(page_size).offset(offset).search(term)
+    request  = factual_client.table(@search_table).filters(filters).near(geo_filter).limit(page_size).offset(offset).search(term)
     response = request.fetch
 
-    #FIXME: Factual sends back a key that begins with '$', and MongoDB whines like a BITCH
+    #FIXME: With a geo_filter, Factual sends back a key that begins with '$', and MongoDB whines like a BITCH
     if(response["response"] && response["response"]["data"])
       response["response"]["data"] = response["response"]["data"].inject([]) do |opts,option|
         opts << option.inject({}) do |hsh,kv|

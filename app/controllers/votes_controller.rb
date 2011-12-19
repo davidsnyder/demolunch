@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
 
   def create
-    @vote   = Vote.new(:option_id => params[:vote][:option][:id],:voter => params[:vote][:voter])
+    @vote = Vote.new(:option_id => params[:vote][:option_id],:voter => params[:vote][:voter])
     if(@vote.save)
       @ballot = Ballot.where(:uuid => params[:vote][:ballot_id]).first
       redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
