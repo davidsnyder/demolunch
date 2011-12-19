@@ -1,16 +1,17 @@
 %h1
   Vote for lunch
-= form_for @vote,:method => "post",:remote => true do |f|
-  = f.hidden_field :ballot_id, :value => @ballot.uuid
-  = f.label :voter
-  = f.text_field :voter
-  #option-bars.span    
-    - @ballot.options.each do |option|
-      = render :partial => "options/bar", :locals => {:option => option}
-  = submit_tag 'Vote',:id => 'vote-submit'
   
 .row
-  #holder{:style => "float: right"}
+  .span
+    = form_for @vote,:method => "post",:remote => true do |f|
+      = f.hidden_field :ballot_id, :value => @ballot.uuid
+      = f.label :voter
+      = f.text_field :voter
+      #option-bars
+        - @ballot.options.each do |option|
+          = render :partial => "options/bar", :locals => {:option => option}
+      = submit_tag 'Vote',:id => 'vote-submit'
+  #holder.span
     
 #votes
 
