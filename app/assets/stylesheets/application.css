@@ -58,3 +58,7 @@
 .search_result .coordinates {
    display: none;   
 }
+
+.selected {
+  background: #ddd;
+}

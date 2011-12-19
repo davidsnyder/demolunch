@@ -1,0 +1,10 @@
+= form_for @ballot do |f|
+  .location
+    = f.hidden_field :option_klass, :value => @ballot.option_klass
+    = f.fields_for(:location) do |ff|
+      = ff.hidden_field :latitude, :value => @ballot.location.latitude
+      = ff.hidden_field :longitude, :value => @ballot.location.longitude
+    -# %p.input
+    -#   = text_field :ballot,:location, :id => :location_autocomplete
+    -# %a{:class => "change_location",:href => "#"} change          
+  = f.submit 'Start Voting'

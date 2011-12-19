@@ -1,13 +1,8 @@
 $(document).ready(function() {
-    $('#vote-submit').click(function(e) { 
-        e.preventDefault(); 
-        $.ajax({
-            type: 'POST', 
-            url: $("#vote-form").attr("action"), 
-            data: $('#vote-form').serialize(), 
-            success: function(r) {}
-        });
-    });
+
+    registerOptionListener();
+
+    $('#vote-submit').hide();
 
     $('#search-submit').click(function(e) { 
         e.preventDefault(); 
@@ -15,7 +10,7 @@ $(document).ready(function() {
             type: 'GET', 
             url: $('#search-form').attr("action"), 
             data: $('#search-form').serialize(), 
-            success: function(r) {
+            success: function(r){
               var searchResponse = "";
               r = JSON.parse(r);
               for(var id in r.response.data) {
@@ -26,7 +21,26 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $('.option .radio').hide();
 
     $('.invite').val(window.location.href.split('://')[1]);
 
 });
+
+function registerOptionListener() {
+    console.log("here");
+    $('.option').click(function(e){
+        $("input:radio").attr('checked',false);
+        $('.option').removeClass('selected');
+
+        $(this).children().find("input:radio").attr('checked',true);
+        $(this).addClass('selected');
+        $.ajax({
+            type: 'POST', 
+            url: $("#new_vote").attr("action"), 
+            data: $('#new_vote').serialize(), 
+            success: function(r){}
+        });
+    });
+}

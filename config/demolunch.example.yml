@@ -1,9 +1,7 @@
 factual:
   oauth_key:
   oauth_secret:
-  table: places
   search_radius: 50000
-  search_category: food
   page_size: 15
 openmenu:
   apikey: 

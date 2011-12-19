@@ -1,0 +1,38 @@
+%h1
+  Vote for lunch
+= form_for @vote,:method => "post",:remote => true do |f|
+  = f.hidden_field :ballot_id, :value => @ballot.uuid
+  = f.label :voter
+  = f.text_field :voter
+  #option-bars.span    
+    - @ballot.options.each do |option|
+      = render :partial => "options/bar", :locals => {:option => option}
+  = submit_tag 'Vote',:id => 'vote-submit'
+  
+.row
+  #holder{:style => "float: right"}
+    
+#votes
+
+%h1
+  Search
+.search
+  = form_tag options_search_path(@ballot.uuid), :remote => true,:method => :get,:id => 'search-form' do
+    .location
+      = hidden_field_tag :latitude, @ballot.location.latitude
+      = hidden_field_tag :longitude, @ballot.location.longitude
+      -# %p.input
+      -#   = text_field :ballot,:location, :id => :location_autocomplete
+      -# %a{:class => "change_location",:href => "#"} change          
+    .selector.flowbox
+      = search_field_tag :q
+    .selector.search
+      = submit_tag "Search",:id => 'search-submit'
+      
+.results
+  %ul#searches
+
+#option-template
+  = render "options/bar_must"
+#search-row-template
+  = render "options/#{@ballot.option_klass.to_s.underscore}"

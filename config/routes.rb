@@ -12,13 +12,15 @@ Demolunch::Application.routes.draw do
 
   resources :meals
 
-  match 'socket_test'  => 'Home#socket_test', :via => :post
+  resources :ballots
+
+  resources :votes, :only => [:create,:show]
 
   resources :organizations do
     resources :meals
   end
 
-  match 'restaurants/search'  => 'Restaurants#search', :via => :get
+  match 'ballots/:ballot_id/options' => 'options#search',:as => :options_search,:via => :get
 
   match ':organization_id/meals/:id' => 'meals#show',:as => :organization_meal,:via => :get
 

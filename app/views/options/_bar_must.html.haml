@@ -1,0 +1,10 @@
+.option{:id => "{{ factual_id }}"}
+  .name
+    {{ name }}
+  .votes
+    {{ voters }}
+  .full_bar
+    .bar{:style => "width: {{ fraction }}%; background: {{ color }};"}
+      &nbsp;
+  .radio
+    %input{:id => "vote_option_{{factual_id}}",:name =>"vote[option][id]",:type =>"radio",:value =>"{{factual_id}}"}

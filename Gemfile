@@ -18,9 +18,7 @@ gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
 
 ## Markup
-gem 'hpricot'
-gem 'ruby_parser'
-gem 'formtastic'
+gem 'mustache'
 gem 'haml'
 
 gem 'uuidtools'
