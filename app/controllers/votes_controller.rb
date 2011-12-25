@@ -1,13 +1,15 @@
 class VotesController < ApplicationController
 
   def create
-    @vote = Vote.new(:option_id => params[:vote][:option_id],:voter => params[:vote][:voter])
+    @ballot = Ballot.where(:uuid => params[:vote][:ballot_id]).first
+    @option = @ballot.options.where(:_id => params[:vote][:option_id]).first
+    @vote   = @option.votes.new(:voter => params[:vote][:voter])
+
     if(@vote.save)
-      @ballot = Ballot.where(:uuid => params[:vote][:ballot_id]).first
       redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
-      redirect_to ballot_path(params[:vote][:ballot_id])
+      redirect_to ballot_path(@ballot.uuid)
     else
-      redirect_to ballot_path(params[:vote][:ballot_id])
+      redirect_to ballot_path(@ballot.uuid)
     end
   end
 

@@ -2,7 +2,9 @@ class BallotsController < ApplicationController
 
   def show
     @ballot = Ballot.where(:uuid => params[:id]).first
-    @vote   = Vote.new
+
+    @vote   = @ballot.options.first.votes.build
+    @vote.option = nil #FIXME: kind of a hack
 
     respond_to do |format|
       format.html
@@ -19,12 +21,11 @@ class BallotsController < ApplicationController
    end
 
   def create
-    #FIXME: Hardcoded option_klass
-    params[:ballot][:option_klass] = RestaurantOption.to_s
-    geo_filter = params[:ballot][:geo_filter].nil? ? {} : Yajl::Parser.parse(params[:ballot][:geo_filter])
+    option_klass = params[:ballot][:option_klass]
+    geo_filter   = params[:ballot][:geo_filter].nil? ? {} : Yajl::Parser.parse(params[:ballot][:geo_filter])
     search_filters = params[:ballot][:search_filters].nil? ? [] : Yajl::Parser.parse(params[:ballot][:search_filters])
 
-    params[:ballot][:options_attributes] = RestaurantOption.search('mexican food',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
+    params[:ballot][:options_attributes] = (option_klass.constantize).search('mexican food',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
 
     @ballot = Ballot.new(params[:ballot])
     if(@ballot.save)

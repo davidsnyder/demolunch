@@ -9,6 +9,7 @@ class Ballot
   field :geo_filter,:type => Hash,:default => {}
 
   embeds_many :options
+
   accepts_nested_attributes_for :options
 
   before_create :generate_uuid!

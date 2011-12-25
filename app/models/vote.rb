@@ -3,8 +3,9 @@ class Vote
   include Mongoid::Timestamps
 
   #belongs_to :voter, :class_name => "User"
-  field :voter #FIXME: Just storing string name until we start handling real users
-  belongs_to :option
-  belongs_to :ballot
+  field :voter #FIXME: Just storing string name until we start handling real
+  #users
+
+  embedded_in :option
 
 end

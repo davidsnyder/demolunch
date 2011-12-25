@@ -7,7 +7,7 @@ class Option
   field :name
 
   embedded_in :ballot
-  has_many :votes
+  embeds_many :votes
 
   class << self; attr_accessor :search_table,:search_filters,:geo_filter end
 
