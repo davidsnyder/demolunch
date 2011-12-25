@@ -1,4 +1,4 @@
-.option{:id => "{{ factual_id }}"}
+.option{:id => "{{ uuid }}"}
   .name
     {{ name }}
   .votes
@@ -7,4 +7,4 @@
     .bar{:style => "width: {{ fraction }}%; background: {{ color }};"}
       &nbsp;
   .radio
-    %input{:id => "vote_option_{{factual_id}}",:name =>"vote[option_id]",:type =>"radio",:value =>"{{factual_id}}"}
+    %input{:id => "vote_option_{{uuid}}",:name =>"vote[option_uuid]",:type =>"radio",:value =>"{{uuid}}"}

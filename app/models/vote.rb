@@ -6,6 +6,7 @@ class Vote
   field :voter #FIXME: Just storing string name until we start handling real
   #users
 
-  embedded_in :option
+  belongs_to :option
+  belongs_to :ballot
 
 end

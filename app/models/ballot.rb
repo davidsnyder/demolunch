@@ -9,17 +9,18 @@ class Ballot
   field :geo_filter,:type => Hash,:default => {}
 
   embeds_many :options
+  has_many :votes
 
   accepts_nested_attributes_for :options
 
   before_create :generate_uuid!
 
-  def total_votes
-    @total_votes ||= options.inject(0){|sum,option| sum += option.votes.length}
-  end
-
   def option_klass_template
     self.option_klass.to_s.underscore
+  end
+
+  def total_votes
+    votes.count
   end
 
   #FIXME: Overriding serialization so I can stuff in instance methods
@@ -32,12 +33,12 @@ class Ballot
           attrs[name] = relation.as_document unless relation.blank?
         end
       end
-    end.merge({:total_votes => total_votes})
+    end.merge({:total_votes => votes.count})
   end
 
   def to_json
     hsh = as_document.to_hash
-    hsh["options"] = hsh["options"].inject({ }){|opts,opt| opts.merge(opt["factual_id"] => opt)}
+    hsh["options"] = hsh["options"].inject({ }){|opts,opt| opts.merge(opt["uuid"] => opt)}
     hsh.to_json
   end
 

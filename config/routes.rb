@@ -14,7 +14,7 @@ Demolunch::Application.routes.draw do
 
   resources :ballots
 
-  resources :votes, :only => [:create,:show]
+  resources :votes
 
   resources :organizations do
     resources :meals

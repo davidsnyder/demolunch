@@ -13,6 +13,15 @@ $(document).ready(function() {
     
     socket.on('connect', function() {
         socket.emit('join', session_id );
+        $.ajax({
+            type: 'GET', 
+            url: session_id+'.json',
+            success: function(ballot){
+                session = ballot;
+                animate(800);
+            }
+        });
+        
     });
 
     socket.on('vote', function(ballot){
@@ -31,7 +40,6 @@ $(document).ready(function() {
     });
 
     var r = Raphael("holder");
-
     var bg = r.circle(300, 300, 0).attr({stroke: "#fff", "stroke-width": 4});        
 
     r.customAttributes.segment = function (x, y, r, a1, a2) {
@@ -51,17 +59,24 @@ $(document).ready(function() {
         delta = 30,
         rad = Math.PI / 180,
         offset;
+
         if(session.total_votes > 0) {
-            for(var id in paths) {
-                if(!(id in session.options)) {
-                    keys.push(id);
+            
+            for(var key_id in session.options) {
+                if(session.options[key_id].votes.length == 0) {
+                    delete session.options[key_id];
+                } else {
+                    keys.push(key_id);
                 }
             }
-
-            for(var id in session.options) {
-                keys.push(id);
-            }
             keys.sort();
+            
+            for(var path_id in paths) {
+                if(!(path_id in session.options)) {
+                    keys.push(path_id);
+                }
+            }
+            
             var prev_end = 0;
             for(var i=0; i < keys.length; i++) {
                 var id = keys[i];
@@ -96,9 +111,7 @@ $(document).ready(function() {
                     paths[id].angle = start - offset / 2;
                 }
             }
-
         }
-            
     }
     
 });

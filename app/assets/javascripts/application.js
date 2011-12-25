@@ -36,8 +36,8 @@ function registerOptionListener() {
         $(this).addClass('selected');
         $.ajax({
             type: 'POST', 
-            url: $("#new_vote").attr("action"), 
-            data: $('#new_vote').serialize(), 
+            url: $("#vote-form").attr("action"), 
+            data: $('#vote-form').serialize(), 
             success: function(r){}
         });
     });

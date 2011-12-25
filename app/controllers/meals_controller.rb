@@ -12,7 +12,7 @@ class MealsController < ApplicationController
 
   def create
     #FAKE:
-    params[:options] = Restaurant.search('mexican food',30.3,-97.7)["response"]["data"][0..3].map{|place|{"id" => place["factual_id"],"name" => place["name"] }}
+    params[:options] = Restaurant.search('mexican food',30.3,-97.7)["response"]["data"][0..3].map{|place|{"id" => place["uuid"],"name" => place["name"] }}
 
     @meal = Meal.new(params[:meal])
     if(@meal.save)

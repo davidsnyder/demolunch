@@ -3,8 +3,8 @@ class BallotsController < ApplicationController
   def show
     @ballot = Ballot.where(:uuid => params[:id]).first
 
-    @vote   = @ballot.options.first.votes.build
-    @vote.option = nil #FIXME: kind of a hack
+    current_vote_id = session[:dl] && session[:dl][@ballot.uuid]
+    @vote   = current_vote_id && Vote.find(current_vote_id) || Vote.new
 
     respond_to do |format|
       format.html
@@ -13,10 +13,12 @@ class BallotsController < ApplicationController
   end
 
   def new
-    @ballot = Ballot.new(:option_klass => RestaurantOption.to_s) #FIXME: Hardcoded option_klass
-    if(@ballot.option_klass.constantize < PlaceOption)
-#      location = location_for(request.remote_ip)
-      @ballot.geo_filter = @ballot.option_klass.constantize.geo_filter_for(30.30,-97.68,APP_CONFIG['factual']['search_radius'])
+    @ballot = Ballot.new(:option_klass => RestaurantOption.to_s) #FIXME:Hardcoded option_klass
+
+    klass = @ballot.option_klass.constantize
+    if(klass < PlaceOption)
+      #location = location_for(request.remote_ip)
+      @ballot.geo_filter = klass.geo_filter_for(30.30,-97.68,APP_CONFIG['factual']['search_radius'])
     end
    end
 
@@ -28,6 +30,7 @@ class BallotsController < ApplicationController
     params[:ballot][:options_attributes] = (option_klass.constantize).search('mexican food',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
 
     @ballot = Ballot.new(params[:ballot])
+
     if(@ballot.save)
       redirect_to ballot_path(@ballot.uuid)
     else
@@ -39,7 +42,7 @@ class BallotsController < ApplicationController
 
   def location_for(ip_address)
     response     = location_by_ip(ip_address)
-    location_hsh = { :latitude => response["latitude"].to_f,:longitude => response["longitude"].to_f,:locality => response["city"].capitalize,:region => response["region"].upcase,:country => response["two_letter_country"]}
+    location_hsh = {:latitude => response["latitude"].to_f,:longitude => response["longitude"].to_f,:locality => response["city"].capitalize,:region => response["region"].upcase,:country => response["two_letter_country"]}
   end
 
   def location_by_ip(ip)

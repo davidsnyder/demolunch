@@ -1,25 +1,27 @@
 class Option
   include Mongoid::Document
 
-  field :factual_id
-  key   :factual_id
-
   field :name
+  field :uuid #This is the foreign id used to retrieve records from :get and :search
 
   embedded_in :ballot
-  embeds_many :votes
+  has_many :votes
 
   class << self; attr_accessor :search_table,:search_filters,:geo_filter end
 
+  def vote_count
+    @count ||= votes.length
+  end
+
   def fraction
-    (ballot.total_votes == 0) ? 0 : (votes.length / ballot.total_votes.to_f) * 100
+    ballot_votes = ballot.total_votes
+    (ballot_votes == 0) ? 0 : (vote_count / ballot_votes.to_f) * 100
   end
 
   def voters
     str = votes[0..4].map{|vote| vote.voter}.join(", ")
-    count = votes.length
-    if(count > 4)
-      str += " and #{count - 4} more"
+    if(vote_count > 4)
+      str += " and #{vote_count - 4} more"
     end
     str
   end
@@ -49,8 +51,8 @@ class Option
     {"$circle" => {"$center" => [latitude.to_f, longitude.to_f],"$meters" => radius.to_i}}
   end
 
-  def self.get(id)
-    filter  = {"factual_id" => {"$eq" => id}}
+  def self.get(uuid)
+    filter  = {"factual_id" => {"$eq" => uuid}}
     request = factual_client.table(@search_table).filters(filter)
     request.fetch
   end
@@ -66,6 +68,7 @@ class Option
     if(response["response"] && response["response"]["data"])
       response["response"]["data"] = response["response"]["data"].inject([]) do |opts,option|
         opts << option.inject({}) do |hsh,kv|
+          kv[0] = kv[0].eql?("factual_id") ? "uuid" : kv[0]
           hsh.merge(kv[0].gsub('$','') => kv[1])
         end
       end

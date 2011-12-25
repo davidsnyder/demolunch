@@ -3,7 +3,7 @@
   
 .row
   .span
-    = form_for @vote,:method => :post,:remote => true do |f|
+    = form_for @vote,:remote => true,:html => {:id => 'vote-form'} do |f|
       = f.hidden_field :ballot_id, :value => @ballot.uuid
       = f.label :voter
       = f.text_field :voter
