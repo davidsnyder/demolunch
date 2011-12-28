@@ -42,4 +42,15 @@ function registerOptionListener() {
             success: function(r){}
         });
     });
+
+    $('.option-details-btn').click(function(e){
+        e.preventDefault();                                        
+        var option_path = $(this).find("a").attr("href");
+        $.ajax({
+            type: 'GET', 
+            url: option_path, 
+            success: function(r){$("#detail").html(r);}
+        });
+    });
+
 }

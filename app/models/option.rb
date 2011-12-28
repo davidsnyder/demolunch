@@ -54,7 +54,8 @@ class Option
   def self.get(uuid)
     filter  = {"factual_id" => {"$eq" => uuid}}
     request = factual_client.table(@search_table).filters(filter)
-    request.fetch
+    resp = request.fetch["response"]["data"][0]
+    resp.merge("uuid" => resp["factual_id"])
   end
 
   def self.search(term,geo_filter={},search_filters=[],page=1)

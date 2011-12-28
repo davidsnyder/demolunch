@@ -115,6 +115,11 @@ ul#option-bars {
   background: #ddd;
 }
 
+#detail {
+  float: left;
+  list-style: none;
+}
+
 #holder {
   float: right;
 /*left: 50%;

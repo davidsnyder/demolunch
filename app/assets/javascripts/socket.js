@@ -28,7 +28,7 @@ $(document).ready(function() {
         session = JSON.parse(ballot);
         var optionBars = "";
         for(var option_id in session.options) {
-            optionBars += Mustache.to_html($("#option-template").html(),{option:session.options[option_id]});        
+            optionBars += Mustache.to_html($("#option-template").html(),{option:session.options[option_id],option_klass: session.option_klass});        
             $("#option-bars").html(optionBars);
         }
         registerOptionListener();
