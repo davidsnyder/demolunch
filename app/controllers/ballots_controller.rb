@@ -14,8 +14,10 @@ class BallotsController < ApplicationController
 
   def new
     @ballot = Ballot.new(:option_klass => RestaurantOption.to_s) #FIXME:Hardcoded option_klass
-
     klass = @ballot.option_klass.constantize
+
+    #example use of klasses, in this case only fetching location if this type of
+    #poll would benefit from it
     if(klass < PlaceOption)
       #location = location_for(request.remote_ip)
       @ballot.geo_filter = klass.geo_filter_for(30.30,-97.68,APP_CONFIG['factual']['search_radius'])

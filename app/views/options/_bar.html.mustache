@@ -1,0 +1,10 @@
+%li.option{:id => "{{ option.uuid }}"}
+  .name
+    {{ option.name }}
+  .votes
+    {{ option.voters }}
+  .full_bar
+    .bar{:style => "width: {{ option.fraction }}%; background: {{ option.color }};"}
+      &nbsp;
+  .radio
+    %input{:id => "vote_option_{{option.uuid}}",:name =>"vote[option_uuid]",:type =>"radio",:value =>"{{option.uuid}}"}
