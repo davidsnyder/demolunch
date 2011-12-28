@@ -3,18 +3,6 @@ body {
     color: #fff;
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 }
-#option-bars {
-    width: 400px;
-}
-#holder {
-    height: 480px;
-    /*left: 50%;
-    margin: -240px 0 0 -320px;
-    position: absolute;*/
-    margin: -240px 0 0 0;
-    top: 50%;
-    width: 640px;
-}
 #copy {
     bottom: 0;
     font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
@@ -24,4 +12,10 @@ body {
 }
 #copy a {
     color: #fff;
+}
+
+.main {
+ width: 1100px;
+ margin: 0 auto;
+ padding-top: 100px;
 }

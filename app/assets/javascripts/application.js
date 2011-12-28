@@ -28,12 +28,13 @@ $(document).ready(function() {
 });
 
 function registerOptionListener() {
-    $('.option').click(function(e){
+    $('.option-inner').click(function(e){
         $("input:radio").attr('checked',false);
-        $('.option').removeClass('selected');
-
         $(this).children().find("input:radio").attr('checked',true);
-        $(this).addClass('selected');
+
+        // $('.option-inner').removeClass('selected');
+        // $(this).addClass('selected');
+
         $.ajax({
             type: 'POST', 
             url: $("#vote-form").attr("action"), 

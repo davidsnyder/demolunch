@@ -19,6 +19,7 @@ gem "oa-oauth", :require => "omniauth/oauth"
 
 ## Markup
 gem 'mustache'
+gem 'poirot'
 gem 'haml'
 
 gem 'uuidtools'

@@ -6,15 +6,56 @@
  *= require_tree . 
 */
 
-
 .option {
-  border-radius: 7px;
-  padding: 8px;
-  margin: 2px;
-  cursor: pointer;
+  display: block;
+  position: relative;
+  border: 1px solid #CCC;
+  border-width: 0;  
+  border-top-width: 1px;
+  padding: 0;
+  cursor: pointer;  
 }
 
-.option:hover {
+ul#option-bars {
+  width: 100%;
+}
+
+.option .option-inner .content {
+  border-radius: 7px;
+  padding: 8px;
+}
+
+.option .option-inner {
+  width: 80%;
+}
+
+.option .option-details-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 20%;
+}
+
+.option .option-details-btn .arrow-r {
+  background: #CCC;  
+  background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);
+  background-position: -108px 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  moz-border-radius: 9px;
+  webkit-border-radius: 9px;
+  position: absolute;
+  margin-top: 35%;
+  margin-left: 50%;
+}
+
+.option .option-inner:hover {
+  background: #f0eee5;
+}
+
+.option .option-details-btn:hover {
   background: #f0eee5;
 }
 
@@ -30,27 +71,34 @@
   background: #fffdf4; /* same color as main/body background */
 }
 
-.bar .selected .option {
-  background: #ddd;
-  height: 10px;
-}
-
 #option-template  {
    display: none;
 }
 
-.row:before, .row:after {
+.ballot-options:before, .ballot-options:after {
   display: table;
   content: "";
 }
-.row:after {
+.ballot-options:after {
   clear: both;
 }
-.row > [class*="span"] {
-  display: inline;
-  float: left;
-  margin-left: 20px;
+
+.right {
+  float: right;
 }
+.left {
+  float: left;
+}
+
+.ballot-options {
+  width: 300px;
+  float: left;
+}
+
+.ballot-options > [class*="span"] {
+  display: inline;
+}
+
 #search-row-template {
    display: none;   
 }
@@ -59,6 +107,17 @@
    display: none;   
 }
 
+.search {
+ float: left;  
+}
+
 .selected {
   background: #ddd;
+}
+
+#holder {
+  float: right;
+/*left: 50%;
+  margin: -240px 0 0 -320px;
+  position: absolute;*/
 }

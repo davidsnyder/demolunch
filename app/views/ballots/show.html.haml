@@ -1,38 +1,32 @@
-%h1
-  Vote for lunch
-  
-.row
-  .span
+.poll-window
+  .ballot-options
     = form_for @vote,:remote => true,:html => {:id => 'vote-form'} do |f|
       = f.hidden_field :ballot_id, :value => @ballot.uuid
       = f.label :voter
       = f.text_field :voter
       %ul#option-bars
         - @ballot.options.each do |option|
-          -# kinda gross, but lets you use the same mustache haml template server and client side
           = Mustache.render(render("options/bar"),:option => option).html_safe 
       = submit_tag 'Vote',:id => 'vote-submit'
   #holder.span
-    
-#votes
 
-%h1
-  Search
-.search
-  = form_tag options_search_path(@ballot.uuid),:remote => true,:method => :get,:id => 'search-form' do
-    = hidden_field_tag :option_klass, @ballot.option_klass
-    .geo_filter
-      = hidden_field_tag :geo_filter, @ballot.geo_filter
-    .search_filters
-      - @ballot.search_filters.each do |sf| 
-        = hidden_field_tag :search_filters, sf
-    .selector.flowbox
-      = search_field_tag :q
-    .selector.search
-      = submit_tag "Search",:id => 'search-submit'
-      
-.results
-  %ul#searches
+-# .search
+-#   %h1
+-#     Search
+-#   = form_tag options_search_path(@ballot.uuid),:remote => true,:method => :get,:id => 'search-form' do
+-#     = hidden_field_tag :option_klass, @ballot.option_klass
+-#     .geo_filter
+-#       = hidden_field_tag :geo_filter, @ballot.geo_filter
+-#     .search_filters
+-#       - @ballot.search_filters.each do |sf| 
+-#         = hidden_field_tag :search_filters, sf
+-#     .selector.flowbox
+-#       = search_field_tag :q
+-#     .selector.search
+-#       = submit_tag "Search",:id => 'search-submit'
+   
+-# .results
+-#   %ul#searches
 
 #option-template
   = render "options/bar"

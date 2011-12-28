@@ -19,6 +19,7 @@
         .invite_text
           INVITE VOTERS
         %input.url.invite{:type => "text"}
-    - flash.each do |name, msg|
-      = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
-    = yield
+    .main
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+      = yield
