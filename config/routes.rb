@@ -10,21 +10,19 @@ Demolunch::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  resources :meals
+#  resources :meals
 
   resources :ballots
-
   resources :votes
 
-  resources :options, :only => [:show]
+  # resources :organizations do
+  #   resources :meals
+  # end
 
-  resources :organizations do
-    resources :meals
-  end
+  match ':option_klass/:id' => 'options#show',:via => :get, :option_klass => /.*Option/
+  match ':option_klass/search' => 'options#search',:as => :options_search,:via => :get,:option_klass => /.*Option/
 
-  match 'ballots/:ballot_id/options' => 'options#search',:as => :options_search,:via => :get
-
-  match ':organization_id/meals/:id' => 'meals#show',:as => :organization_meal,:via => :get
+# match ':organization_id/meals/:id' => 'meals#show',:as => :organization_meal,:via => :get
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

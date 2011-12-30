@@ -11,6 +11,6 @@
       .radio
         %input{:id => "vote_option_{{option.uuid}}",:name =>"vote[option_uuid]",:type =>"radio",:value =>"{{option.uuid}}"}
   .option-details-btn
-    %a{:href => "/options/{{option.uuid}}?option_klass={{option_klass}}"}
+    %a{:href => "/{{option_klass}}/{{option.uuid}}"}
       .arrow-r
       
