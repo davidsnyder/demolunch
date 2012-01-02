@@ -51,6 +51,19 @@ ul#option-bars {
   margin-left: 50%;
 }
 
+.option .plus-sign {
+  background: #CCC;  
+  background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  moz-border-radius: 9px;
+  webkit-border-radius: 9px;
+  position: absolute;
+  margin-top: 35%;
+  margin-left: 50%;
+}
+
 .option .option-inner:hover {
   background: #f0eee5;
 }
@@ -90,6 +103,10 @@ ul#option-bars {
   float: left;
 }
 
+#searches {
+  float: left;
+}
+
 .ballot-options {
   width: 300px;
   float: left;
@@ -105,10 +122,6 @@ ul#option-bars {
 
 .search_result .coordinates {
    display: none;   
-}
-
-.search {
- float: left;  
 }
 
 .selected {

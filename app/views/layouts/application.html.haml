@@ -2,10 +2,10 @@
 %html
   %head
     %title Democratic Lunch
-    = stylesheet_link_tag :application,"demo","demo-print"
+    = stylesheet_link_tag :application,"demo","demo-print","http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css","jquery-ui-1.8.custom.css"
     
     %script{:type => "text/javascript", :src=> "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
-    // %script{:type => "text/javascript", :src=> "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"}
+    %script{:type => "text/javascript", :src=> "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"}
     %script{:type => "text/javascript", :src  => "http://github.com/janl/mustache.js/raw/master/mustache.js"}      
 
     = csrf_meta_tags

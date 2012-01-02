@@ -29,7 +29,7 @@ class BallotsController < ApplicationController
     geo_filter   = params[:ballot][:geo_filter].nil? ? {} : Yajl::Parser.parse(params[:ballot][:geo_filter])
     search_filters = params[:ballot][:search_filters].nil? ? [] : Yajl::Parser.parse(params[:ballot][:search_filters])
 
-    params[:ballot][:options_attributes] = (option_klass.constantize).search('mexican food',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
+    params[:ballot][:options_attributes] = (option_klass.constantize).search('sandwich',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
 
     @ballot = Ballot.new(params[:ballot])
 
@@ -40,7 +40,24 @@ class BallotsController < ApplicationController
     end
   end
 
+  def update
+    @ballot = Ballot.find(params[:id])
+    @option = (@ballot.option_klass.constantize).new(params[:ballot][:options_attributes])
+    @ballot.options << @option
+    if(@ballot.save)
+      redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
+      redirect_to ballot_path(@ballot.uuid)
+    else
+      flash[:error] = "You have fucked up now"
+      redirect_to ballot_path(@ballot.uuid)
+    end
+  end
+
   private
+
+  def redis_client
+    @redis_client ||= Redis.new(:host => 'localhost',:port => 6379)
+  end
 
   def location_for(ip_address)
     response     = location_by_ip(ip_address)

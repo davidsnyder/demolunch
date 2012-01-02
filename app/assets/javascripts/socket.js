@@ -12,7 +12,7 @@ $(document).ready(function() {
     var keys    = [];
     
     socket.on('connect', function() {
-        socket.emit('join', session_id );
+        socket.emit('join', session_id);
         $.ajax({
             type: 'GET', 
             url: session_id+'.json',
@@ -21,7 +21,6 @@ $(document).ready(function() {
                 animate(800);
             }
         });
-        
     });
 
     socket.on('vote', function(ballot){
