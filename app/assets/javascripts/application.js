@@ -18,7 +18,7 @@ $(document).ready(function() {
 		data: $('#search-form').serialize(),
 		success: function(search_results) {
 		    response($.map(search_results.response.data,function(item){
-                        item["label"]=item.name;
+                        item["label"]=item.name+" - "+item.address;
                         return item;
                     }));
 		}
