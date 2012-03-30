@@ -46,10 +46,14 @@ class BallotsController < ApplicationController
     @ballot.options << @option
     if(@ballot.save)
       redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
-      redirect_to ballot_path(@ballot.uuid)
+      respond_to do |format|
+        format.json { render :json => Yajl::Encoder.encode(@ballot) }
+      end
     else
-      flash[:error] = "You have fucked up now"
-      redirect_to ballot_path(@ballot.uuid)
+      flash[:error] = "Noe gikk galt!"
+      respond_to do |format|
+        format.json { render :json => Yajl::Encoder.encode(@ballot) }
+      end
     end
   end
 
