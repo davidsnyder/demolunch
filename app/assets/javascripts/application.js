@@ -87,14 +87,16 @@ function registerOptionListener() {
 
     $('.search-button').click(function(e){
         e.preventDefault();
-        $('.option-dialog').hide();        
+        $('.option-dialog').hide();  
         $('#search-input').show();
-        $('#search-input').focus();        
+        $('#search-input').focus();
+        $('.option-details-btn .plus-sign').hide();        
     });
 
   $('#search-input').blur(function(e){
        $(this).hide();        
        $('.option-dialog').show();
+       $('.option-details-btn .plus-sign').show();        
   });
     
 }

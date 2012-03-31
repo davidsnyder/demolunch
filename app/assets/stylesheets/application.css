@@ -21,6 +21,15 @@
   margin: 0 0 18px 25px;  
 }
 
+#search-input {
+  margin: 10px 0px 0px 2px;
+  padding: 10px;
+}
+
+.search-button:hover {
+  background: #f0eee5;
+}
+
 .option-dialog {
   font: 22px/24px serif;
   padding: 8px;
@@ -73,6 +82,7 @@
 .option .option-inner:hover {
   background: #f0eee5;
 }
+
 
 .option .option-details-btn:hover {
   background: #f0eee5;
