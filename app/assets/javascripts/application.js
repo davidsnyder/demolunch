@@ -91,5 +91,10 @@ function registerOptionListener() {
         $('#search-input').show();
         $('#search-input').focus();        
     });
+
+  $('#search-input').blur(function(e){
+       $(this).hide();        
+       $('.option-dialog').show();
+  });
     
 }
