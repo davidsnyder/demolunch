@@ -1,30 +1,32 @@
-.poll-window
-  .ballot-options
-    = form_for @vote,:remote => true,:html => {:id => 'vote-form'} do |f|
-      = f.hidden_field :ballot_id, :value => @ballot.uuid
-      = f.label :voter
-      = f.text_field :voter
-      %ul#option-bars
-        - @ballot.options.each do |option|
-          = Mustache.render(render("options/bar"),:option => option,:option_klass => @ballot.option_klass).html_safe
-    %li.option.search 
-      .content
-        .option-dialog
-          Add Option
-        = form_tag "/#{@ballot.option_klass}/search",:remote => true,:method => :get,:id => 'search-form' do
-          .geo_filter
-            = hidden_field_tag :geo_filter, @ballot.geo_filter
-          .search_filters
-            - @ballot.search_filters.each do |sf| 
-              = hidden_field_tag :search_filters, sf
-          .selector
-            = search_field_tag :q, nil,:id => 'search-input'
-          .selector.search
-            = submit_tag "Search",:id => 'search-submit'
-      .option-details-btn
-        .plus-sign
-      = submit_tag 'Vote',:id => 'vote-submit'
-  #holder.span
+.row
+  .span6
+    .row
+      = form_for @vote,:remote => true,:html => {:id => 'vote-form'} do |f|
+        = f.hidden_field :ballot_id, :value => @ballot.uuid
+        -# = f.label :voter
+        -# = f.text_field :voter
+        %ul#option-bars
+          - @ballot.options.each do |option|
+            = Mustache.render(render("options/bar"),:option => option,:option_klass => @ballot.option_klass).html_safe
+      %li.option.search-button
+        .content
+          .option-dialog
+            Add Option
+          = form_tag "/#{@ballot.option_klass}/search",:remote => true,:method => :get,:id => 'search-form' do
+            .geo_filter
+              = hidden_field_tag :geo_filter, @ballot.geo_filter
+            .search_filters
+              - @ballot.search_filters.each do |sf| 
+                = hidden_field_tag :search_filters, sf
+            .selector
+              = search_field_tag :q, nil,:id => 'search-input'
+            .selector.search
+              = submit_tag "Search",:id => 'search-submit'
+        .option-details-btn
+          .plus-sign
+        = submit_tag 'Vote',:id => 'vote-submit'
+  .span10      
+    #holder
 
 #detail
 

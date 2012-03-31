@@ -13,11 +13,17 @@
   border-width: 0;  
   border-top-width: 1px;
   padding: 0;
-  cursor: pointer;  
+  cursor: pointer;
+
 }
 
-ul#option-bars {
-  width: 100%;
+.search-button {
+  margin: 0 0 18px 25px;  
+}
+
+.option-dialog {
+  font: 22px/24px serif;
+  padding: 8px;
 }
 
 .option .option-inner .content {
@@ -133,9 +139,3 @@ ul#option-bars {
   list-style: none;
 }
 
-#holder {
-  float: right;
-/*left: 50%;
-  margin: -240px 0 0 -320px;
-  position: absolute;*/
-}

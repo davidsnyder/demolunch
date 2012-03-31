@@ -85,9 +85,9 @@ function registerOptionListener() {
         });
     });
 
-    $('.option-dialog').click(function(e){
+    $('.search-button').click(function(e){
         e.preventDefault();
-        $(this).hide();        
+        $('.option-dialog').hide();        
         $('#search-input').show();
         $('#search-input').focus();        
     });
