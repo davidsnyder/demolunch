@@ -66,6 +66,24 @@
   margin-left: 50%;
 }
 
+.option .option-details-btn .arrow-d {
+  background: #CCC;  
+  background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);
+  background-position: -216px 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  moz-border-radius: 9px;
+  webkit-border-radius: 9px;
+  position: absolute;
+  margin-top: 35%;
+  margin-left: 50%;
+}
+
+.option .option-details {
+  margin: 10px 0px 10px 10px;
+}
+
 .option .plus-sign {
   background: #CCC;  
   background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);

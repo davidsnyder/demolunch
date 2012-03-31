@@ -1,16 +1,8 @@
-%li.search_result{:id => "{{uuid}}"}
-  .name
-    {{name}}
-  .address
-    {{address}} {{address_extended}}
-  .locality
-    {{locality}}, {{region}}
-  .coordinates
-    .latitude
-      {{latitude}}
-    .longitude
-      {{longitude}} 
-  .telephone
-    {{tel}} 
-  .category
-    {{category}}
+.address
+  {{ option.address}} {{ option.address_extended}}
+.locality
+  {{ option.locality}}, {{ option.region}}
+.telephone
+  {{ option.tel}} 
+.category
+  {{ option.category}}

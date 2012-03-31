@@ -78,11 +78,29 @@ function registerOptionListener() {
     $('a.option-details-btn').click(function(e){
         e.preventDefault();                                        
         var option_path = $(this).attr("href");
-        $.ajax({
-            type: 'GET', 
-            url: option_path, 
-            success: function(response){$("#detail").html(response);}
-        });
+        var option_id = $(this).parent().attr("id");
+        var that = $(this);
+        if($(this).parent().children(".option-details").html().length == 0) {
+            $.ajax({
+                type: 'GET', 
+                url: option_path, 
+                success: function(response){
+                    that.children().removeClass("arrow-r");
+                    that.children().addClass("arrow-d");                                        
+                    var newOption = Mustache.to_html($("#search-row-template").html(),{option: response});        
+                    that.parent().children(".option-details").append(newOption);
+                }});
+        }
+        else if($(this).parent().children(".option-details").is(":hidden")){
+            $(this).parent().children(".option-details").show(); 
+            $(this).children().removeClass("arrow-r");
+            $(this).children().addClass("arrow-d");                                        
+        }
+        else {
+            $(this).parent().children(".option-details").hide();
+            $(this).children().removeClass("arrow-d");
+            $(this).children().addClass("arrow-r");                                        
+        }
     });
 
     $('.search-button').click(function(e){
