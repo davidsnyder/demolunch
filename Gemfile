@@ -22,6 +22,10 @@ group :development do
   gem 'haml-rails'
 end
 
+group :production do
+  gem 'thin'
+end
+
 group :test do
   gem 'rspec'
 end
