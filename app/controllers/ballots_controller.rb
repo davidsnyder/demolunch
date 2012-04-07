@@ -38,10 +38,4 @@ class BallotsController < ApplicationController
   def update
   end
 
-  private
-
-  def redis_client
-    @redis_client ||= Redis.new(:host => 'localhost',:port => 6379)
-  end
-
 end

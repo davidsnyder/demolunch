@@ -19,7 +19,7 @@ class VotesController < ApplicationController
       session[:dl][@ballot.uuid] ||= {}
       session[:dl][@ballot.uuid] = @vote.id
 
-      redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
+      REDIS.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot))
       redirect_to ballot_path(@ballot.uuid)
     else
       redirect_to ballot_path(@ballot.uuid)
@@ -39,17 +39,11 @@ class VotesController < ApplicationController
       session[:dl] ||= {}
       session[:dl][@ballot.uuid] ||= {}
       session[:dl][@ballot.uuid] = @vote.id
-      redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot)) #FIXME: this should push on its own channel?
+      REDIS.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot)) #FIXME: this should push on its own channel?
       redirect_to ballot_path(@ballot.uuid)
     else
       redirect_to ballot_path(@ballot.uuid)
     end
-  end
-
-  private
-
-  def redis_client
-    @redis_client ||= Redis.new(:host => 'localhost',:port => 6379)
   end
 
 end
