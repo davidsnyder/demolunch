@@ -92,7 +92,7 @@ $(document).ready(function() {
                     //delete labels[id];
                     continue; // bad form, carlos. *tsk tsk*. Seriously though, this is kind of gross and needs to be noted to minimize future headaches.
                 }
-                offset = 360 / session.total_votes * (session.options[id].votes.length); //FIXME: the whole pie disappears if this is exactly 360?
+                offset = 360 / session.total_votes * (session.options[id].votes.length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
                 color = session.options[id].color;                
                 if(offset > 0) {
                     if(!(paths[id] == undefined)) {
@@ -104,9 +104,9 @@ $(document).ready(function() {
                     else {
                         // rationale with going to prev_end: prev_end is the angle that the future neighbors of the newborn slice were meeting at.
                         // prev_end is arguably a deceptive name given that it corresponds to the new placement of the previous segment, not the previous placement of the current slice.
-                        paths[id] = r.path().attr({segment: [350, 200, 100, prev_end, prev_end],fill:color,stroke: "#CCC"}) //create a new segment for this id
+                        paths[id] = r.path().attr({segment: [350, 200, 100, prev_end, prev_end],fill:color,stroke: color}) //create a new segment for this id
                     }
-                    paths[id].animate({segment: [350, 200, 100, start, start + offset],fill:color,stroke:"#CCC"}, ms || 1500);  //animate yourself to this new segment size            
+                    paths[id].animate({segment: [350, 200, 100, start, start + offset],fill:color,stroke: color}, ms || 1500);  //animate yourself to this new segment size            
                     // labels[id] = r.text(350 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 200 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), session.options[id].name).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});
                     start += offset;            
                     paths[id].angle = start - offset / 2;
