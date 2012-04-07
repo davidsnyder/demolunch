@@ -1,8 +1,0 @@
-= form_for @meal do
-  .location
-    = hidden_field_tag :latitude, @meal.location.latitude
-    = hidden_field_tag :longitude, @meal.location.longitude
-    -# %p.input
-    -#   = text_field :meal,:location, :id => :location_autocomplete
-    -# %a{:class => "change_location",:href => "#"} change          
-  = submit_tag 'Start Voting'
