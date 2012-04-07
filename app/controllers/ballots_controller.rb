@@ -29,11 +29,11 @@ class BallotsController < ApplicationController
     option_klass   = params[:ballot][:option_klass]
     geo_filter     = params[:ballot][:geo_filter].nil? ? {} : Yajl::Parser.parse(params[:ballot][:geo_filter])
     search_filters = params[:ballot][:search_filters].nil? ? [] : Yajl::Parser.parse(params[:ballot][:search_filters])
-
+    options_attributes = params[:ballot].delete(:options_attributes)
     @ballot = Ballot.new(params[:ballot])
 
     #TODO: defaulting to 4 static options
-    options_attributes = (option_klass.constantize).search('sandwich',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
+    #options_attributes = (option_klass.constantize).search('sandwich',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
     options_attributes.each do |option_attrs|
       @option = (@ballot.option_klass.constantize).new(option_attrs)
       @option.ballot = @ballot

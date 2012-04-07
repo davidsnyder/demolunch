@@ -6,6 +6,12 @@
  *= require_tree . 
 */
 
+#countdown {
+  color: gray;
+  font: 28px/30px serif;
+  padding: 15px;
+}
+
 .option {
   display: block;
   position: relative;

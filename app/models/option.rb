@@ -10,7 +10,7 @@ class Option
   embedded_in :ballot
   has_many :votes
 
-  before_create :set_color
+  before_create :set_color,:capitalize_name
 
   class << self; attr_accessor :search_table,:search_filters,:geo_filter end
 
@@ -50,10 +50,6 @@ class Option
     response
   end
 
-  def set_color
-    self.color = COLORS[ballot.options.count % COLORS.length]
-  end
-
   def to_json
     as_document.to_hash.to_json
   end
@@ -72,6 +68,14 @@ class Option
   end
 
   private
+
+  def set_color
+    self.color = COLORS[ballot.options.count % COLORS.length]
+  end
+
+  def capitalize_name
+    self.name = self.name.split(" ").map(&:capitalize).join(" ")
+  end
 
   def self.factual_client
     @factual_client ||= Factual::Client.new(APP_CONFIG['factual']['oauth_key'],APP_CONFIG['factual']['oauth_secret'] )

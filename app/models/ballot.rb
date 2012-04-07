@@ -2,7 +2,11 @@ class Ballot
   include Mongoid::Document
 
   field :uuid
-  field :expire,:type => Date
+
+  attr_accessible :expire,:option_klass
+  attr_accessor :expire
+
+  field :expire_date,:type => DateTime
   key   :uuid
 
   field :option_klass #set at ballot creation, used to tune search results
@@ -14,7 +18,7 @@ class Ballot
 
   accepts_nested_attributes_for :options
 
-  before_create :generate_uuid!
+  before_create :generate_uuid!,:set_expire_date
 
   def option_klass_template
     self.option_klass.to_s.underscore
@@ -22,6 +26,14 @@ class Ballot
 
   def total_votes
     votes.count
+  end
+
+  def time_left
+    ((expire_date - Time.now) / 60).round
+  end
+
+  def times_up?
+    expire_date < Time.now
   end
 
   #FIXME: Overriding serialization so I can stuff in instance methods
@@ -44,6 +56,10 @@ class Ballot
   end
 
   private
+
+  def set_expire_date
+    self.expire_date = Time.now + (self.expire.to_i * 60)
+  end
 
   def generate_uuid!
     self.uuid = ("%032x" % UUIDTools::UUID.timestamp_create.to_i)[0..8]

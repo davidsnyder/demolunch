@@ -18,6 +18,7 @@ $(document).ready(function() {
             url: session_id+'.json',
             success: function(ballot){
                 session = ballot;
+                new Timer("#countdown",new Date(ballot.expire_date));
                 animate(800);
             }
         });

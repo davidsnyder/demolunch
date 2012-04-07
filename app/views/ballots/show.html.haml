@@ -1,6 +1,7 @@
 .row
   .span6
     .row
+      #countdown
       = form_for @vote,:remote => true,:html => {:id => 'vote-form'} do |f|
         = f.hidden_field :ballot_id, :value => @ballot.uuid
         -# = f.label :voter
@@ -40,4 +41,4 @@
   = render "options/#{@ballot.option_klass_template}"
 
 %script{:type => "text/javascript", :src  => "http://localhost:3000/socket.io/socket.io.js"}
-= javascript_include_tag :application,:raphael,:socket  
+= javascript_include_tag :application,:timer,:raphael,:socket
