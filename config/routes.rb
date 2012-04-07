@@ -19,8 +19,8 @@ Demolunch::Application.routes.draw do
   #   resources :meals
   # end
 
-  match ':option_klass/search' => 'options#search',:as => :options_search,:via => :get,:option_klass => /.*Option/
-  match ':option_klass/:id' => 'options#show',:via => :get, :option_klass => /.*Option/
+  # match ':option_klass/search' => 'options#search',:as => :options_search,:via => :get,:option_klass => /.*Option/
+  # match ':option_klass/:id' => 'options#show',:via => :get, :option_klass => /.*Option/
 
 # match ':organization_id/meals/:id' => 'meals#show',:as => :organization_meal,:via => :get
 
@@ -64,7 +64,7 @@ Demolunch::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  root :to => 'home#index'
+  root :to => 'ballots#new'
 
   # See how all your routes lay out with "rake routes"
 
