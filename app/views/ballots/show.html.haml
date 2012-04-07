@@ -29,11 +29,8 @@
   .span10      
     #holder
 
-= form_for @ballot, :remote => true,:html => {:id => 'ballot-form'} do |f|
-  %input{:id => "ballot_options_attributes",:type => "hidden",:name => "ballot[options_attributes]"}
- 
-.results
-  %ul#searches
+-# = form_for @ballot, :remote => true,:html => {:id => 'ballot-form'} do |f|
+-#   %input{:id => "ballot_options_attributes",:type => "hidden",:name => "ballot[options_attributes]"}
 
 #option-template
   = render "options/bar"

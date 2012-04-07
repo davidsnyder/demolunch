@@ -36,8 +36,8 @@ $(document).ready(function() {
         delay: 200,
 	minLength: 3,
         select: function(event, ui) {
-            if($("#"+ui.item.uuid).length > 0) {
-                $("#"+ui.item.uuid).effect("highlight", {}, 1000);
+            if($("#"+ui.item.id).length > 0) {
+                $("#"+ui.item.id).effect("highlight", {}, 1000);
                 event.stopPropagation(); //dont close the menu
                 event.preventDefault();
             }
@@ -84,42 +84,42 @@ function registerOptionListener() {
         });
     });
     
-    if(!$('a.option-details-btn').data("events")) {
-        $('a.option-details-btn').click(function(e){
-            e.preventDefault();                                        
-            var option_path = $(this).attr("href");
-            var that = $(this);
-            if($(this).parent().children(".option-details").html().length == 0) {
-                $.ajax({
-                    type: 'GET', 
-                    url: option_path, 
-                    success: function(response){
-                        that.children().removeClass("arrow-r");
-                        that.children().addClass("arrow-d");                                        
-                        var newOption = Mustache.to_html($("#search-row-template").html(),{option: response});        
-                        that.parent().children(".option-details").append(newOption);
-                    }});
-            }
-            else if($(this).parent().children(".option-details").is(":hidden")){
-                $(this).parent().children(".option-details").show(); 
-                $(this).children().removeClass("arrow-r");
-                $(this).children().addClass("arrow-d");                                        
-            }
-            else {
-                $(this).parent().children(".option-details").hide();
-                $(this).children().removeClass("arrow-d");
-                $(this).children().addClass("arrow-r");                                        
-            }
-        });
-    }
+    // if(!$('a.option-details-btn').data("events")) {
+    //     $('a.option-details-btn').click(function(e){
+    //         e.preventDefault();                                        
+    //         var option_path = $(this).attr("href");
+    //         var that = $(this);
+    //         if($(this).parent().children(".option-details").html().length == 0) {
+    //             $.ajax({
+    //                 type: 'GET', 
+    //                 url: option_path, 
+    //                 success: function(response){
+    //                     that.children().removeClass("arrow-r");
+    //                     that.children().addClass("arrow-d");                                        
+    //                     var newOption = Mustache.to_html($("#search-row-template").html(),{option: response});        
+    //                     that.parent().children(".option-details").append(newOption);
+    //                 }});
+    //         }
+    //         else if($(this).parent().children(".option-details").is(":hidden")){
+    //             $(this).parent().children(".option-details").show(); 
+    //             $(this).children().removeClass("arrow-r");
+    //             $(this).children().addClass("arrow-d");                                        
+    //         }
+    //         else {
+    //             $(this).parent().children(".option-details").hide();
+    //             $(this).children().removeClass("arrow-d");
+    //             $(this).children().addClass("arrow-r");                                        
+    //         }
+    //     });
+    // }
 
-    $('.search-button').click(function(e){
-        e.preventDefault();
-        $('.option-dialog').hide();  
-        $('#search-input').show();
-        $('#search-input').focus();
-        $('.option-details-btn .plus-sign').hide();        
-    });
+    // $('.search-button').click(function(e){
+    //     e.preventDefault();
+    //     $('.option-dialog').hide();  
+    //     $('#search-input').show();
+    //     $('#search-input').focus();
+    //     $('.option-details-btn .plus-sign').hide();        
+    // });
 
   $('#search-input').blur(function(e){
        $(this).hide();        

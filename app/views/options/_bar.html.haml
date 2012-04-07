@@ -1,15 +1,15 @@
-%li.option{:id => "{{ option.uuid }}"}
+%li.option{:id => "{{ option._id }}"}
   .option-inner
     .content
       .name
         {{ option.name }}
       .votes
-        {{ option.voters }}
+        {{ option.voters }} 
       .full_bar
         .bar{:style => "width: {{ option.fraction }}%; background: {{ option.color }};"}
           &nbsp;
       .radio
-        %input{:id => "vote_option_{{option.uuid}}",:name =>"vote[option_uuid]",:type =>"radio",:value =>"{{option.uuid}}"}
-  %a{:href => "/{{option_klass}}/{{option.uuid}}.json",:class => "option-details-btn"}
+        %input{:id => "vote_option_{{option._id}}",:name =>"vote[option_id]",:type =>"radio",:value =>"{{option._id}}"}
+  -# %a{:href => "/{{option_klass}}/{{option.uuid}}.json",:class => "option-details-btn"}
     .arrow-r
   .option-details

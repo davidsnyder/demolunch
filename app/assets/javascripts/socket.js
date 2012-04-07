@@ -18,8 +18,8 @@ $(document).ready(function() {
             url: session_id+'.json',
             success: function(ballot){
                 session = ballot;
-                new Timer("#countdown",new Date(ballot.expire_date));
                 animate(800);
+                new Timer("#countdown",new Date(ballot.expire_date));                
             }
         });
     });
@@ -57,7 +57,6 @@ $(document).ready(function() {
         rad = Math.PI / 180,
         offset,
         bg;
-        
         if(session.total_votes == 0) { //empty pie
             bg = r.circle(350,200,100).attr({stroke: "#CCC", "stroke-width": 2});        
         }

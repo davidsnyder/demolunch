@@ -2,7 +2,7 @@ class VotesController < ApplicationController
 
   def create
     @ballot = Ballot.where(:uuid => params[:vote][:ballot_id]).first
-    @option = @ballot.options.where(:uuid => params[:vote][:option_uuid]).first
+    @option = @ballot.options.find(params[:vote][:option_id])
 
     if(current_vote_id = session[:dl] && session[:dl][@ballot.uuid])
       @vote = Vote.find(current_vote_id)
@@ -30,7 +30,7 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
 
     @ballot = Ballot.where(:uuid => params[:vote][:ballot_id]).first
-    @option = @ballot.options.where(:uuid => params[:vote][:option_uuid]).first
+    @option = @ballot.options.find(params[:vote][:option_id])
 
     @vote.option = @option
 
@@ -39,7 +39,6 @@ class VotesController < ApplicationController
       session[:dl] ||= {}
       session[:dl][@ballot.uuid] ||= {}
       session[:dl][@ballot.uuid] = @vote.id
-
       redis_client.publish('dl.channel.votes',Yajl::Encoder.encode(@ballot)) #FIXME: this should push on its own channel?
       redirect_to ballot_path(@ballot.uuid)
     else

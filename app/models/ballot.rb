@@ -51,7 +51,7 @@ class Ballot
 
   def to_json
     hsh = as_document.to_hash
-    hsh["options"] = hsh["options"].inject({ }){|opts,opt| opts.merge(opt["uuid"] => opt)}
+    hsh["options"] = hsh["options"].inject({ }){|opts,opt| opts.merge(opt["_id"] => opt)}
     hsh.to_json
   end
 
