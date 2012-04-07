@@ -21,5 +21,8 @@
 #option-template
   = render "options/bar"
 
-%script{:type => "text/javascript", :src  => "http://localhost:3000/socket.io/socket.io.js"}
+%script{:type => "text/javascript", :src  => "#{ENV['NODE_URL']}/socket.io/socket.io.js" }  
+%script{:type => "text/javascript"}
+  var socket = io.connect("#{ENV['NODE_URL']}");
+
 = javascript_include_tag :application,:timer,:raphael,:socket

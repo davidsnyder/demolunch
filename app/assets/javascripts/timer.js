@@ -33,7 +33,7 @@ Timer.prototype = {
     if (minute > 0) {
       return minute + ':' + strsecond + ' minutes left';
     } else {
-      return '0:'+strsecond+' seconds left';
+      return '00:'+strsecond+' seconds left';
     }
   }
 };
