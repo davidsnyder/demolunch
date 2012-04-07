@@ -26,7 +26,8 @@ $(document).ready(function() {
 
     socket.on('vote', function(ballot){
         session = JSON.parse(ballot);
-        var optionBars = "";
+        //update the option bars
+        var optionBars = "";        
         for(var option_id in session.options) {
             optionBars += Mustache.to_html($("#option-template").html(),{option:session.options[option_id],option_klass: session.option_klass});        
             $("#option-bars").html(optionBars);
@@ -104,7 +105,7 @@ $(document).ready(function() {
                     else {
                         // rationale with going to prev_end: prev_end is the angle that the future neighbors of the newborn slice were meeting at.
                         // prev_end is arguably a deceptive name given that it corresponds to the new placement of the previous segment, not the previous placement of the current slice.
-                        paths[id] = r.path().attr({segment: [350, 200, 100, prev_end, prev_end],fill:color,stroke: color}) //create a new segment for this id
+                        paths[id] = r.path().attr({segment: [350, 200, 100, prev_end, prev_end],fill:color,stroke: color}); //create a new segment for this id
                     }
                     paths[id].animate({segment: [350, 200, 100, start, start + offset],fill:color,stroke: color}, ms || 1500);  //animate yourself to this new segment size            
                     // labels[id] = r.text(350 + (150 + delta + 55) * Math.cos((start+(offset/2)) * rad), 200 + (150 + delta + 25) * Math.sin((start+(offset/2)) * rad), session.options[id].name).attr({fill: "#000", stroke: "none", opacity: 1, "font-size": 20});
