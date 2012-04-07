@@ -5,7 +5,7 @@ class Option
   field :uuid #This is the foreign id used to retrieve records from :get and :search
   field :color
 
-  COLORS = ['#0af','#d95634', '#ffc000', '#fd8504']
+  COLORS = ['#0af','#FF9797', '#B89AFE', '#7CEB98','#FFFF84','#BEFEEB']
 
   embedded_in :ballot
   has_many :votes
