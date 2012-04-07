@@ -8,7 +8,7 @@ require "active_resource/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
-APP_CONFIG = YAML.load_file(File.expand_path("../demolunch.yml", __FILE__)) unless defined?(APP_CONFIG)
+#APP_CONFIG = YAML.load_file(File.expand_path("../demolunch.yml", __FILE__)) unless defined?(APP_CONFIG)
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
