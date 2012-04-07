@@ -9,28 +9,12 @@ gem 'mongoid_slug'
 
 gem 'redis'
 
-gem 'chimps' #using Infochimps IP => Geo
-gem 'open_menu', :git => 'git://gist.github.com/1473403.git'
-gem 'factual',:git => 'git://gist.github.com/1491244.git'
-
-## Auth
-gem 'devise'
-gem "oa-oauth", :require => "omniauth/oauth"
-
 ## Markup
 gem 'mustache'
 gem 'poirot'
 gem 'haml'
 
 gem 'uuidtools'
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.1.4'
-  gem 'coffee-rails', '~> 3.1.1'
-  gem 'uglifier', '>= 1.0.3'
-end
 
 group :development do
   gem 'haml-rails'
