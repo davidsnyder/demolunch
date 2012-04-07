@@ -9,6 +9,8 @@ gem 'mongoid_slug'
 
 gem 'redis'
 
+gem 'yajl-ruby', :require => "yajl"
+
 ## Markup
 gem 'mustache'
 gem 'poirot'

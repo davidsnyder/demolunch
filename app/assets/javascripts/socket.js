@@ -66,7 +66,7 @@ $(document).ready(function() {
 
             //TODO: EXTRACT METHOD
             for(var key_id in session.options) {
-                if(session.options[key_id].votes.length == 0) {
+                if(session.options[key_id].fraction == 0) {
                     delete session.options[key_id];
                 } else {
                     keys.push(key_id);
@@ -93,7 +93,7 @@ $(document).ready(function() {
                     //delete labels[id];
                     continue; // bad form, carlos. *tsk tsk*. Seriously though, this is kind of gross and needs to be noted to minimize future headaches.
                 }
-                offset = 360 / session.total_votes * (session.options[id].votes.length * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
+                offset = (360 / session.total_votes) * ((session.options[id].fraction / 100) * session.total_votes * 0.999999); //FIXME: the whole pie disappears if this is exactly 360?
                 color = session.options[id].color;                
                 if(offset > 0) {
                     if(!(paths[id] == undefined)) {

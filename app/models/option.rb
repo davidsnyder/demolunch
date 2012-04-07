@@ -31,7 +31,7 @@ class Option
           attrs[name] = relation.as_document unless relation.blank?
         end
       end
-    end.merge(:fraction => fraction,:votes => votes.map{|v|v.as_document.to_hash})
+    end.merge(:fraction => fraction)
   end
 
   private
