@@ -17,7 +17,7 @@ class Ballot
   before_create :generate_uuid!,:set_expire_date!
 
   def total_votes
-    votes.count
+    @total_votes ||= votes.count
   end
 
   def time_left

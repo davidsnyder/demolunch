@@ -11,9 +11,11 @@
             = Mustache.render(render("options/bar"),:option => option).html_safe
   .span8    
     #holder
-      
+
+.left
+  #vote-count
+    #{@ballot.total_votes} Vote#{@ballot.total_votes == 1 ? '' : 's'}
 .right
-  
   = link_to "Start a new ballot",new_ballot_path 
   
 #option-template

@@ -33,6 +33,11 @@ $(document).ready(function() {
             $("#option-bars").html(optionBars);
         }
         registerOptionListener();
+        voteCountHtml = "<span>"+session.total_votes+" Vote";
+        if(session.total_votes != 1) { voteCountHtml += "s"; }
+        voteCountHtml += "</span>";
+        $("#vote-count").html(voteCountHtml);
+        
         animate(800); //update the piechart 
     });
 
