@@ -14,8 +14,9 @@ h3. Installation
 
 3. Start the "dl-node":https://github.com/davidsnyder/dl-node node.js vote server
 
-4. export NODE_URL=http://localhost:3000 or (http://furious-earth-8617.herokuapp.com/: + process.env.PORT)
-
+4. export NODE_URL=http://localhost:3000 
+   or heroku config:add NODE_URL=(http://furious-earth-8617.herokuapp.com/: + process.env.PORT) 
+   
 5. Start the rails server
 
    @rails s -p 3001@
