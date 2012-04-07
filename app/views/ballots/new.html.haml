@@ -1,24 +1,18 @@
 .row
   .span6
     .row
-      = form_for @ballot,:method => :post do |f|
-        
-        = f.hidden_field :option_klass
-        .geo_filter
-          = f.hidden_field :geo_filter, :value => @ballot.geo_filter.to_json
-        .search_filters
-          - @ballot.search_filters.each do |sf| 
-            = f.hidden_field :search_filters, :value => sf.to_json
+      = form_for @ballot do |f|
+        = render "shared/form_errors", :object => @ballot
         %h2
           Where should we eat in 
-          = f.select(:expire,[10,15,20,25,30,45,60])
+          = f.select(:expire,[10,20,30,40,50,60])
           minutes?
         %h1
           Build your Ballot
         .row
           - 3.times do 
             %li.option-add
-              %input{:name => "ballot[options_attributes][][name]"}
+              %input{:name => "ballot[options_attributes][][name]",:autocomplete => :off}
               .option-add-btn
                 .cross
           #reveal-options
@@ -26,7 +20,7 @@
           #more-options
             - 2.times do 
               %li.option-add
-              %input{:name => "ballot[options_attributes][][name]"}                
+              %input{:name => "ballot[options_attributes][][name]",:autocomplete => :off}                
                 .option-add-btn
                   .cross
                 
