@@ -12,7 +12,7 @@ h3. Installation
 
    @mongod &@
 
-3. Start the dl-node nodejs vote server 
+3. Start the "dl-node":https://github.com/davidsnyder/dl-node node.js vote server 
 
 4. Start the rails server
 
