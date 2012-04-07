@@ -11,27 +11,27 @@
             = f.hidden_field :search_filters, :value => sf.to_json
         %h2
           Where should we eat in 
-          = select(:ballot,:expire,[10,15,20,25,30,45,60])
+          = f.select(:expire,[10,15,20,25,30,45,60])
           minutes?
         %h1
           Build your Ballot
         .row
-          %li.option-add
-            = text_field_tag :q, nil,:id => "foobar",:autocomplete => :off
-            .option-add-btn
-              .cross
+          - 3.times do 
+            %li.option-add
+              %input{:name => "ballot[options_attributes][][name]"}
+              .option-add-btn
+                .cross
+          #reveal-options
+            %a Add rows
+          #more-options
+            - 2.times do 
+              %li.option-add
+              %input{:name => "ballot[options_attributes][][name]"}                
+                .option-add-btn
+                  .cross
+                
         %ul#option-bars
         = f.submit 'Start Voting'
-        
-#option-template
-  %li.option-add
-    .option-inner
-      .content
-        .name
-          {{ name }}                
-        %input{:name => "ballot[options_attributes][][name]",:value => "{{name}}",:type => :hidden }
-      .option-add-btn
-        .plus-sign
 
 = javascript_include_tag :application  
 = stylesheet_link_tag "new-ballot"

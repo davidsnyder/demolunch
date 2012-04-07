@@ -31,9 +31,9 @@ Timer.prototype = {
     var strsecond = (second < 10 && minute > 0 ? '0' : '') + second;
 
     if (minute > 0) {
-      return minute + ':' + strsecond + ' minutes';
+      return minute + ':' + strsecond + ' minutes left';
     } else {
-      return strsecond;
+      return '0:'+strsecond+' seconds left';
     }
   }
 };

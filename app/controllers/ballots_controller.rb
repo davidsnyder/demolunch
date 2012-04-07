@@ -35,6 +35,7 @@ class BallotsController < ApplicationController
     #TODO: defaulting to 4 static options
     #options_attributes = (option_klass.constantize).search('sandwich',geo_filter,search_filters,params[:page]||1)["response"]["data"][0..3]
     options_attributes.each do |option_attrs|
+      next unless option_attrs["name"].strip.length > 0
       @option = (@ballot.option_klass.constantize).new(option_attrs)
       @option.ballot = @ballot
       @option.save
