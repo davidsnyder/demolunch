@@ -3,48 +3,20 @@ class Option
 
   field :name
   field :uuid #This is the foreign id used to retrieve records from :get and :search
+  field :color
+
+  COLORS = ['#0af','#d95634', '#ffc000', '#fd8504']
 
   embedded_in :ballot
   has_many :votes
 
-  class << self; attr_accessor :search_table,:search_filters,:geo_filter end
+  before_create :set_color
 
-  def vote_count
-    @count ||= votes.length
-  end
+  class << self; attr_accessor :search_table,:search_filters,:geo_filter end
 
   def fraction
     ballot_votes = ballot.total_votes
-    (ballot_votes == 0) ? 0 : (vote_count / ballot_votes.to_f) * 100
-  end
-
-  def voters
-    str = votes[0..4].map{|vote| vote.voter}.join(", ")
-    if(vote_count > 4)
-      str += " and #{vote_count - 4} more"
-    end
-    str
-  end
-
-  def color
-    "#0af"
-  end
-
-  #FIXME: Overriding serialization so I can stuff in instance methods
-  def as_document
-    attributes.tap do |attrs|
-      return attrs if frozen?
-      relations.each_pair do |name, meta|
-        if meta.embedded?
-          relation = send(name)
-          attrs[name] = relation.as_document unless relation.blank?
-        end
-      end
-    end.merge(:color => color,:fraction => fraction, :voters => voters,:votes => votes.map{|v|v.as_document.to_hash})
-  end
-
-  def to_json
-    as_document.to_hash.to_json
+    (ballot_votes == 0) ? 0 : (votes.length / ballot_votes.to_f) * 100
   end
 
   def self.geo_filter_for(latitude,longitude,radius)
@@ -69,12 +41,34 @@ class Option
     if(response["response"] && response["response"]["data"])
       response["response"]["data"] = response["response"]["data"].inject([]) do |opts,option|
         opts << option.inject({}) do |hsh,kv|
+          hsh.delete("24")
           kv[0] = kv[0].eql?("factual_id") ? "uuid" : kv[0]
           hsh.merge(kv[0].gsub('$','') => kv[1])
         end
       end
     end
     response
+  end
+
+  def set_color
+    self.color = COLORS[ballot.options.count % COLORS.length]
+  end
+
+  def to_json
+    as_document.to_hash.to_json
+  end
+
+  #FIXME: Overriding serialization so I can stuff in instance methods
+  def as_document
+    attributes.tap do |attrs|
+      return attrs if frozen?
+      relations.each_pair do |name, meta|
+        if meta.embedded?
+          relation = send(name)
+          attrs[name] = relation.as_document unless relation.blank?
+        end
+      end
+    end.merge(:fraction => fraction,:votes => votes.map{|v|v.as_document.to_hash})
   end
 
   private
