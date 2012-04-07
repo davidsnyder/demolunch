@@ -1,28 +1,20 @@
 class Ballot
   include Mongoid::Document
 
-  field :uuid
-
-  attr_accessible :expire,:option_klass
+  attr_accessible :expire,:options_attributes
   attr_accessor :expire
 
-  field :expire_date,:type => DateTime
+  field :uuid
   key   :uuid
-
-  field :option_klass #set at ballot creation, used to tune search results
-  field :search_filters,:type => Array,:default => []
-  field :geo_filter,:type => Hash,:default => {}
+  field :expire_date,:type => DateTime
 
   embeds_many :options
   has_many :votes
 
-  accepts_nested_attributes_for :options
+  accepts_nested_attributes_for :options, :reject_if => proc { |attributes| attributes['name'].blank? }
+  validates_presence_of :options
 
-  before_create :generate_uuid!,:set_expire_date
-
-  def option_klass_template
-    self.option_klass.to_s.underscore
-  end
+  before_create :generate_uuid!,:set_expire_date!
 
   def total_votes
     votes.count
@@ -57,7 +49,7 @@ class Ballot
 
   private
 
-  def set_expire_date
+  def set_expire_date!
     self.expire_date = Time.now + (self.expire.to_i * 60)
   end
 
