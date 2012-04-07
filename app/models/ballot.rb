@@ -2,6 +2,7 @@ class Ballot
   include Mongoid::Document
 
   field :uuid
+  field :expire,:type => Date
   key   :uuid
 
   field :option_klass #set at ballot creation, used to tune search results

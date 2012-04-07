@@ -14,16 +14,15 @@
   border-top-width: 1px;
   padding: 0;
   cursor: pointer;
-
-}
-
-.search-button {
-  margin: 0 0 18px 25px;  
 }
 
 #search-input {
   margin: 10px 0px 0px 2px;
   padding: 10px;
+}
+
+.search-button {
+  margin: 0 0 18px 25px;  
 }
 
 .search-button:hover {
@@ -80,11 +79,25 @@
   margin-left: 50%;
 }
 
+.option .option-details-btn .cross {
+  background: #CCC;  
+  background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);
+  background-position: -216px 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  moz-border-radius: 9px;
+  webkit-border-radius: 9px;
+  position: absolute;
+  margin-top: 35%;
+  margin-left: 50%;
+}
+
 .option .option-details {
   margin: 10px 0px 10px 10px;
 }
 
-.option .plus-sign {
+.option .option-details-btn .plus-sign {
   background: #CCC;  
   background-image: url(http://code.jquery.com/mobile/1.0rc2/images/icons-18-white.png);
   width: 18px;
@@ -165,5 +178,11 @@
 #detail {
   float: left;
   list-style: none;
+}
+
+#foobar {
+  font-size: 30px;
+  margin: 20px;
+  padding:15px;
 }
 

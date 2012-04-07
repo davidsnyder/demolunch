@@ -1,6 +1,15 @@
 $(document).ready(function() {
 
     registerOptionListener();
+
+    $("#foobar").keydown(function(e) {
+        if(e.which == 13) { //disable Enter default action
+            e.preventDefault();
+            option_html = Mustache.to_html($("#option-template").html(),{name: $("#foobar")[0].value});
+            $("#option-bars").append(option_html);
+            $("#foobar")[0].value = "";
+        }
+    }); 
     
     $('.invite').val(window.location.href.split('://')[1]);    
 

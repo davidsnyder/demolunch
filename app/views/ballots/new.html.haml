@@ -1,8 +1,37 @@
-= form_for @ballot,:method => :post do |f|
-  = f.hidden_field :option_klass
-  .geo_filter
-    = f.hidden_field :geo_filter, :value => @ballot.geo_filter.to_json
-  .search_filters
-    - @ballot.search_filters.each do |sf| 
-      = f.hidden_field :search_filters, :value => sf.to_json
-  = f.submit 'Start Voting'
+.row
+  .span6
+    .row
+      = form_for @ballot,:method => :post do |f|
+        
+        = f.hidden_field :option_klass
+        .geo_filter
+          = f.hidden_field :geo_filter, :value => @ballot.geo_filter.to_json
+        .search_filters
+          - @ballot.search_filters.each do |sf| 
+            = f.hidden_field :search_filters, :value => sf.to_json
+        %h2
+          Where should we eat in 
+          = select(:ballot,:expire,[10,15,20,25,30,45,60])
+          minutes?
+        %h1
+          Build your Ballot
+        .row
+          %li.option-add
+            = text_field_tag :q, nil,:id => "foobar",:autocomplete => :off
+            .option-add-btn
+              .cross
+        %ul#option-bars
+        = f.submit 'Start Voting'
+        
+#option-template
+  %li.option-add
+    .option-inner
+      .content
+        .name
+          {{ name }}                
+        %input{:name => "ballot[options_attributes][][name]",:value => "{{name}}",:type => :hidden }
+      .option-add-btn
+        .plus-sign
+
+= javascript_include_tag :application  
+= stylesheet_link_tag "new-ballot"
