@@ -20,6 +20,7 @@ h3. Installation
 
 h3. Deployment   
 
-1. heroku config:add NODE_URL=http://furious-earth-8617.herokuapp.com/
-2. heroku addons:add redistogo
-3. heroku addons:add mongohq:free   
+1. heroku addons:add redistogo
+2. heroku addons:add mongohq:free
+3. heroku config:add NODE_URL=http://furious-earth-8617.herokuapp.com/
+4. heroku config:add REDISTOGO_URL= (copy dl-node's @process.env.REDISTOGO_URL@ -> @heroku run node@ will start an interactive session)
