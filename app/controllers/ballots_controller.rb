@@ -3,7 +3,7 @@ class BallotsController < ApplicationController
   def show
     @ballot = Ballot.where(:uuid => params[:id]).first
 
-    current_vote_id = session[:dl] && session[:dl][@ballot.uuid]
+    current_vote_id = cookies.signed[@ballot.uuid]
     @vote = current_vote_id && Vote.find(current_vote_id) || Vote.new
 
     respond_to do |format|
