@@ -12,6 +12,22 @@
   padding: 15px;
 }
 
+.question-field {
+ width: 600px;
+ padding: 10px;
+ font: 28px/30px helvetica,arial,serif;
+}
+
+.outline {
+  border: 1px solid #CCC;
+}
+
+.question {
+  padding: 20px 0px 20px 20px;
+  font: 35px/40px helvetica,arial,serif;
+  color: gray;
+}
+
 .option {
   display: block;
   position: relative;

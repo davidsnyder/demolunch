@@ -7,6 +7,6 @@
         {{ option.voters }} 
       .full_bar
         .bar{:style => "width: {{ option.fraction }}%; background: {{ option.color }};"}
-          &nbsp;
+          {{ option.fraction }}% 
       .radio
         %input{:id => "vote_option_{{option._id}}",:name =>"vote[option_id]",:type =>"radio",:value =>"{{option._id}}"}

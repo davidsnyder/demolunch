@@ -26,6 +26,7 @@ $(document).ready(function() {
         //update the option bars
         var optionBars = "";        
         for(var option_id in session.options) {
+          session.options[option_id].fraction = session.options[option_id].fraction.toFixed(1);
             optionBars += Mustache.to_html($("#option-template").html(),{option:session.options[option_id],option_klass: session.option_klass});        
             $("#option-bars").html(optionBars);
         }

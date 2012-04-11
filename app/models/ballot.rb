@@ -1,12 +1,13 @@
 class Ballot
   include Mongoid::Document
 
-  attr_accessible :expire,:options_attributes
+  attr_accessible :expire,:question,:options_attributes
   attr_accessor :expire
 
   field :uuid
   key   :uuid
-  field :expire_date,:type => DateTime
+#  field :expire_date,:type => DateTime
+  field :question, :type => String
 
   embeds_many :options
   has_many :votes
@@ -14,19 +15,19 @@ class Ballot
   accepts_nested_attributes_for :options, :reject_if => proc { |attributes| attributes['name'].blank? }
   validates_presence_of :options
 
-  before_create :generate_uuid!,:set_expire_date!
+  before_create :generate_uuid! #,:set_expire_date!
 
   def total_votes
     @total_votes ||= votes.count
   end
 
-  def time_left
-    ((expire_date - Time.now) / 60).round
-  end
-
-  def times_up?
-    expire_date < Time.now
-  end
+  # def time_left
+  #   ((expire_date - Time.now) / 60).round
+  # end
+  #
+  # def times_up?
+  #   expire_date < Time.now
+  # end
 
   #FIXME: Overriding serialization so I can stuff in instance methods
   def as_document
@@ -49,9 +50,9 @@ class Ballot
 
   private
 
-  def set_expire_date!
-    self.expire_date = Time.now + (self.expire.to_i * 60)
-  end
+  # def set_expire_date!
+  #   self.expire_date = Time.now + (self.expire.to_i * 60)
+  # end
 
   def generate_uuid!
     self.uuid = ("%032x" % UUIDTools::UUID.timestamp_create.to_i)[0..8]
