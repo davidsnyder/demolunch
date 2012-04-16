@@ -2,5 +2,6 @@
 db/*.sqlite3
 log/*.log
 config/demolunch.yml
+Rakefile
 tmp/
 .sass-cache/
