@@ -4,23 +4,19 @@ h3. Installation
 
 1. Install "MongoDB":http://www.mongodb.org/
 
-1. Install dependencies
+2. Install Gem dependencies: @bundle@
 
-   @bundle@
+h3. How to Run
 
-2. Start the mongodb server
+3. Start the mongodb server: @mongod &@
 
-   @mongod &@
+4. Start the "dl-node":https://github.com/davidsnyder/dl-node node.js vote server
 
-3. Start the "dl-node":https://github.com/davidsnyder/dl-node node.js vote server
+5. Start the rails server: @rails s -p 3001@
 
-5. Start the rails server
+h3. Heroku Deployment   
 
-   @rails s -p 3001@
-
-h3. Deployment   
-
-1. heroku addons:add redistogo
-2. heroku addons:add mongohq:free
-3. heroku config:add NODE_URL=http://furious-earth-8617.herokuapp.com/
-4. heroku config:add REDISTOGO_URL= (copy dl-node's @process.env.REDISTOGO_URL@ -> @heroku run node@ will start an interactive session)
+1. @heroku addons:add redistogo@
+2. @heroku addons:add mongohq:free@
+3. @heroku config:add NODE_URL=http://furious-earth-8617.herokuapp.com/@
+4. @heroku config:add REDISTOGO_URL@ (use dl-node's @process.env.REDISTOGO_URL@ -> @heroku run node@ will start an interactive session)
